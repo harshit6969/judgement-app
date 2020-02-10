@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { FormControl, InputLabel, Select, MenuItem, ListItemSecondaryAction, Table, TableContainer, TableRow, TableHead, TableCell, TableBody } from '@material-ui/core';
+import { FormControl, InputLabel, Select, MenuItem, Checkbox, FormControlLabel, FormLabel, FormGroup } from '@material-ui/core';
 import { Input, Dialog, DialogTitle, DialogContent, DialogActions,FormHelperText } from '@material-ui/core';
 class StepperForm extends React.Component {
     constructor(props) {
@@ -9,78 +8,158 @@ class StepperForm extends React.Component {
         this.state = {
             activeStep: 0,
             players: this.props.players,
-            IsPlaying: this.props.IsPlaying
+            IsPlaying: this.props.RoundInProgress,
+            hasError: false,
+            errorInfo: null,
+            TotalHands:0,
         }
-        this.handleBack = this.handleBack.bind(this);
-        this.handleReset = this.handleReset.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.handleBeforeRoundSubmit = this.handleBeforeRoundSubmit.bind(this);
+        this.handleAfterRoundSubmit = this.handleAfterRoundSubmit.bind(this);
     }
-    handleChange(e){
+    handleBeforeRoundSubmit(){
+        try{
         let players = this.state.players;
-        players[this.state.activeStep].CurrentScore = e.target.value;
-        this.setState({players: players, activeStep: this.state.activeStep + 1 });
-        if(this.state.activeStep == players.length - 1){
-            let Players = this.state.players;
-            let TotalHands = 0;
-            Players.forEach(Player=>{
-                TotalHands+=Player.CurrentScore
-            })
-            if(TotalHands){
-                this.props.handleScoreUpload(this.state.players);
+        let flag = true;
+        let TotalHands = 0;
+        for(let player of players){
+            if(this.state.hasOwnProperty(player.ID)){
+                player.CurrentRoundScore = parseInt(this.state[player.ID])
+                TotalHands+=this.state[player.ID]
             }else{
-                this.setState({hasError: true, errorInfo: "Total hands not met", activeStep:0})
+                flag = false
+                break
             }
         }
+        if(flag && parseInt(52 / this.state.players.length) != parseInt(TotalHands)){
+            this.props.handleScoreUpload(this.state);
+        }else{
+            this.setState({hasError: true, errorInfo: "Invalid hands:" + TotalHands.toString(), activeStep:0})
+        }
+    }catch(e){
+        this.setState({hasError: true, errorInfo: "Bhakk"})
     }
-    handleBack() {
-        this.setState({ activeStep: this.state.activeStep - 1 });
     }
-    handleReset() {
-        this.setState({ activeStep: 0 });
+
+    handleAfterRoundSubmit(){
+        let Players = this.state.players;
+        let flag = true;
+        for(let Player of Players){
+            if(!this.state[Player.ID]){
+                flag = false;
+                break;
+            }
+        }
+        if(flag){
+            this.setState({hasError: true, errorInfo: "Bhakk"})
+        }else{
+            // Players.forEach(Player => Player.CurrentRoundScore = this.state[Player.ID] ? 10 + parseInt(Player.CurrentRoundScore): 0)
+            // console.log(this.state)
+            // console.log(Players)
+            this.props.handleScoreUpload(this.state);
+        }
+    }
+    componentDidMount(){
+        if(this.state.IsPlaying){
+            this.state.players.forEach(player => this.setState({[player.ID]: true}))
+        }
     }
     render() {
-        let CurrentPlayer = this.state.players[this.state.activeStep];
+        if(this.state.IsPlaying){
+            return(<Dialog open={true}>
+                <DialogTitle>Results for Round: <strong>{this.props.currentRounds + 1}</strong> </DialogTitle>
+                <DialogContent>
+                    <form>
+        <FormControl required component="fieldset">
+        <FormLabel component="legend">Unselect failures</FormLabel>
+        <FormGroup>
+            {this.state.players.map((player, index)=>
+          <FormControlLabel
+          control={<Checkbox checked={this.state[player.ID]} onChange={(e) => this.setState({[e.target.value]: !this.state[e.target.value]})} value={player.ID} />}
+          label={player.Name}
+        />
+            )}
+        </FormGroup>
+        <FormHelperText error={this.state.hasError}>{this.state.errorInfo}</FormHelperText>
+      </FormControl>
+                    </form>
+                </DialogContent>
+                <DialogActions>
+                    <div>
+                        <div>
+                        <Button variant="contained" color="primary" onClick={this.handleAfterRoundSubmit}>
+                                Submit
+                            </Button>
+                            <Button
+                            variant="container" color="secondary"
+                            onClick={this.props.handleBack}
+                            >
+                                Back
+                        </Button>
+    
+                        </div>
+                    </div>
+                </DialogActions>
+            </Dialog>)
+        }
         return (<Dialog disableBackdropClick disableEscapeKeyDown open={true}>
-            <DialogTitle>Enter points for next round</DialogTitle>
+            <DialogTitle>Hands for Round: <strong>{this.props.currentRounds + 1}</strong> </DialogTitle>
             <DialogContent>
+                
                 <form>
-                    <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                        Points for {CurrentPlayer.Name}
-    </Typography>
-                    <FormControl required>
-                        <InputLabel>Score</InputLabel>
-                        <Select
-                            onChange={this.handleChange}
-                            value={CurrentPlayer.CurrentScore}
-                            input={<Input />}
-                            style={{ minWidth: '120px' }}>
-                            <MenuItem value={0}>Zero</MenuItem>
-                            <MenuItem value={1}>One</MenuItem>
-                            <MenuItem value={2}>Two</MenuItem>
-                            <MenuItem value={3}>Three</MenuItem>
-                            <MenuItem value={4}>Four</MenuItem>
-                            <MenuItem value={5}>Five</MenuItem>
-                            <MenuItem value={6}>Six</MenuItem>
-                            <MenuItem value={7}>Seven</MenuItem>
-                        </Select>
-                        <FormHelperText error={this.state.hasError}>{this.state.errorInfo}</FormHelperText>
-                    </FormControl>
+                <FormLabel component="legend">Total Hands: {this.state.TotalHands}</FormLabel>
+
+                <FormControl required component="fieldset">
+        <FormGroup>
+            {this.state.players.map((Player, index)=>
+            <FormControl required>
+    <InputLabel>{Player.Name}</InputLabel>
+            <Select
+            id={Player.ID}
+            name={Player.ID}
+            onChange={(e)=> {
+                let players = this.state.players;
+                let TotalHands = e.target.value;
+                for(let player of players){
+                    if(this.state.hasOwnProperty(player.ID)){
+                        if(!(e.target.name == player.ID)){
+                            TotalHands+=this.state[player.ID]
+                        }
+                    }
+                }
+                this.setState({[Player.ID]: e.target.value, TotalHands: TotalHands})
+            }}
+                value={this.state[Player.ID]}
+                input={<Input id={Player.ID}/>}
+                style={{ minWidth: '200px' }}>
+                <MenuItem value={0}>0</MenuItem>
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={6}>6</MenuItem>
+                <MenuItem value={7}>7</MenuItem>
+            </Select>
+        </FormControl>
+            )}
+        </FormGroup>
+        <FormHelperText error={this.state.hasError}>{this.state.errorInfo}</FormHelperText>
+      </FormControl>
                 </form>
-                <Typography>Step {(this.state.activeStep+1)} of {this.state.players.length+1}.</Typography>
+
             </DialogContent>
             <DialogActions>
                 <div>
                     <div>
-                    <Button variant="contained" color="secondary" onClick={this.handleReset}>
-                            Reset
+                    <Button variant="contained" color="primary" onClick={this.handleBeforeRoundSubmit}>
+                                Submit
+                            </Button>
+                            <Button
+                            variant="container" color="secondary"
+                            onClick={this.props.handleBack}
+                            >
+                                Back
                         </Button>
-                        <Button
-                            disabled={this.state.activeStep === 0}
-                            onClick={this.handleBack}
-                        >
-                            Back
-                    </Button>
-
                     </div>
                 </div>
             </DialogActions>

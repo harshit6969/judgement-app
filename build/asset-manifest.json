@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.f9280981.chunk.css",
+    "main.js": "/static/js/main.943dc9be.chunk.js",
+    "main.js.map": "/static/js/main.943dc9be.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/css/2.22a7d4ef.chunk.css": "/static/css/2.22a7d4ef.chunk.css",
+    "static/js/2.a544a502.chunk.js": "/static/js/2.a544a502.chunk.js",
+    "static/js/2.a544a502.chunk.js.map": "/static/js/2.a544a502.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.687f8f145e4c5bdb2d7bed87e4e43a36.js": "/precache-manifest.687f8f145e4c5bdb2d7bed87e4e43a36.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.22a7d4ef.chunk.css.map": "/static/css/2.22a7d4ef.chunk.css.map",
+    "static/css/main.f9280981.chunk.css.map": "/static/css/main.f9280981.chunk.css.map",
+    "static/media/Baby.jpg": "/static/media/Baby.9bea3725.jpg",
+    "static/media/Harshit.jpg": "/static/media/Harshit.a15bf8da.jpg",
+    "static/media/Maadi.jpg": "/static/media/Maadi.8ad40e89.jpg",
+    "static/media/Mudit.jpg": "/static/media/Mudit.179b5202.jpg",
+    "static/media/Nabh.jpg": "/static/media/Nabh.760dacc1.jpg",
+    "static/media/Parmar.jpg": "/static/media/Parmar.b6aad3d5.jpg",
+    "static/media/Shanky.jpg": "/static/media/Shanky.dd0e4a66.jpg",
+    "static/media/Shivi.jpg": "/static/media/Shivi.a5f30007.jpg",
+    "static/media/Vikas.jpg": "/static/media/Vikas.783a3bfc.jpg"
+  }
+}

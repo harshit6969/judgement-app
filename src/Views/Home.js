@@ -1,17 +1,16 @@
 import React from 'react';
 import { Grid, Typography, Container, AppBar, Toolbar, Avatar, Paper, Link, Card, CardContent, CardActions, Button } from '@material-ui/core';
 import { List, ListItem, ListItemAvatar, FormGroup, ListItemText, Collapse, IconButton, FormControl, Checkbox, FormHelperText, FormControlLabel } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import CloseIcon from '@material-ui/icons/Close';
-import GameHelper from '../data-access-layer/game-helper'
 import players from '../players.js';
 import {withRouter } from "react-router-dom";
+import { setValue, getValue } from '../data-access-layer/storage-helper'
+import uuidv from 'uuid';
 
 class GamesHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            players: [],
+            Players: players,
             Game: "Judgement"
         }
         this.startGame = this.startGame.bind(this);
@@ -34,7 +33,8 @@ class GamesHome extends React.Component {
             }
         });
         if(TotalPlayers > 3 && TotalPlayers < 10){
-            let GameId = GameHelper.initGame(GamePlayers);
+            let GameId = uuidv.v4();
+            setValue(GameId, {Players: GamePlayers});
             this.props.history.push('/'+this.state.Game+'/'+GameId);
         }else{
             this.setState({hasError: true, errorInfo: "Player count not suitable for the game"})
@@ -63,10 +63,10 @@ class GamesHome extends React.Component {
                                 <Typography component="h2" variant="h6" color="primary" gutterBottom>Select players</Typography>
                                 <FormControl required component="fieldset">
                                     <FormGroup>
-                                        {this.state.players.map((player, index) =>
+                                        {this.state.Players.map((player, index) =>
                                             <FormControlLabel
                                                 control={<Checkbox checked={player.IsPlaying} value={player.Name} id={index} onChange={(e) => {
-                                                    let CurrentPlayers = this.state.players;
+                                                    let CurrentPlayers = this.state.Players;
                                                     CurrentPlayers[e.target.id].IsPlaying = e.target.checked;
                                                     this.setState({ players: CurrentPlayers })
                                                 }} />}

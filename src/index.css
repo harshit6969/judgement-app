@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.MuiListItem-container{
+  list-style: none;
+}
+.MuiTableCell-head{
+  font-weight: bolder;
+}
+
+text{
+  font-weight: bolder !important;
+  font-size: 14px !important;
+  fill: black !important;
+}

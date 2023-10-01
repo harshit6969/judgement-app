@@ -114,7 +114,7 @@ class App extends React.Component {
                         >
                             <Typography variant="h5">
                                 Judgement
-    </Typography>
+                            </Typography>
                             <Typography variant="h6">
                                 {this.state.seconds.toString().toHHMMSS()}
                             </Typography>
@@ -129,7 +129,7 @@ class App extends React.Component {
                     showLabels
                 >
                     <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-                    {this.state.currentRounds > 0 ? <BottomNavigationAction label="End game" icon={<AppsIcon />} onClick={() => this.setState({ GameStarted: false })} /> : <BottomNavigationAction label="Start game" icon={<PlayCircleFilledWhiteIcon />} onClick={() => this.setState({ openPlayerHandler: true })} />}
+                    {this.state.currentRounds > 0 ? <BottomNavigationAction label="End game" icon={<AppsIcon />} onClick={() => this.setState({ GameStarted: false })} /> : <BottomNavigationAction label="Start games" icon={<PlayCircleFilledWhiteIcon />} onClick={() => this.setState({ openPlayerHandler: true })} />}
 
                     <BottomNavigationAction icon={<Typography component="div">
                         <Grid component="label" container alignItems="center" spacing={1}>
@@ -237,7 +237,7 @@ class App extends React.Component {
                                                             color="text secondary"
                                                         >
                                                             in progress
-  </Typography>
+                                                        </Typography>
                                                     </React.Fragment>
                                                 }
                                             />
@@ -304,7 +304,7 @@ class App extends React.Component {
                 <MUIDataTable
                     title={<Typography component="h2" variant="h6" color="primary" gutterBottom>
                         Scorecard
-</Typography>}
+                    </Typography>}
                     data={this.state.table_data}
                     columns={this.state.table_headers}
                     options={{

@@ -59,36 +59,6 @@ const players = [
         "ColorCode": "#f57c00"
     },
     {
-        "ID": 5,
-        "Name": "Baby",
-        "IsMF": false,
-        "Profile": Baby,
-        "CurrentRoundScore": 0,
-        "TotalScore": 0,
-        Scores: [],
-        "ColorCode": "#ff5722"
-    },
-    {
-        "ID": 6,
-        "Name": "Shivi",
-        "IsMF": false,
-        "Profile": Shivi,
-        "CurrentRoundScore": 0,
-        "TotalScore": 0,
-        Scores: [],
-        "ColorCode": "#424242"
-    },
-    {
-        "ID": 7,
-        "Name": "Mudit",
-        "IsMF": false,
-        "Profile": Mudit,
-        "CurrentRoundScore": 0,
-        "TotalScore": 0,
-        Scores: [],
-        "ColorCode": "#424242"
-    },
-    {
         "ID": 8,
         "Name": "Vikas",
         "IsMF": false,

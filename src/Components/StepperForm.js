@@ -32,7 +32,7 @@ class StepperForm extends React.Component {
                     break
                 }
             }
-            if (flag && parseInt(52 / this.state.players.length) != parseInt(TotalHands)) {
+            if (flag && parseInt(52 / this.state.players.length) !== parseInt(TotalHands)) {
                 this.props.handleScoreUpload(this.state);
             } else {
                 this.setState({ hasError: true, errorInfo: "Invalid hands:" + TotalHands.toString(), activeStep: 0 })
@@ -134,7 +134,7 @@ class StepperForm extends React.Component {
                                                 let TotalHands = e.target.value;
                                                 for (let player of players) {
                                                     if (this.state.hasOwnProperty(player.ID)) {
-                                                        if (!(e.target.name == player.ID)) {
+                                                        if (!(e.target.name === player.ID)) {
                                                             TotalHands += this.state[player.ID]
                                                         }
                                                     }
@@ -165,7 +165,7 @@ class StepperForm extends React.Component {
                                             let TotalHands = value;
                                             for (let player of players) {
                                                 if (this.state.hasOwnProperty(player.ID)) {
-                                                    if (!(Player.ID == player.ID)) {
+                                                    if (!(Player.ID === player.ID)) {
                                                         TotalHands += this.state[player.ID]
                                                     }
                                                 }

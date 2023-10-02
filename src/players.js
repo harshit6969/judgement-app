@@ -1,12 +1,8 @@
 import Parmar from '../src/constants/images/Parmar.jpg'
 import Maadi from '../src/constants/images/Maadi.jpg'
-import Nabh from '../src/constants/images/Nabh.jpg'
 import Harshit from '../src/constants/images/Harshit.jpg'
 import Shanky from '../src/constants/images/Shanky.jpg'
-import Baby from '../src/constants/images/Baby.jpg'
-import Shivi from '../src/constants/images/Shivi.jpg'
 import Vikas from '../src/constants/images/Vikas.jpg'
-import Mudit from '../src/constants/images/Mudit.jpg'
 
 const players = [
     {
@@ -51,6 +47,16 @@ const players = [
     {
         "ID": 4,
         "Name": "Himanshu",
+        "IsMF": false,
+        "Profile": "",
+        "CurrentRoundScore": 0,
+        "TotalScore": 0,
+        Scores: [],
+        "ColorCode": "#f57c00"
+    },
+    {
+        "ID": 5,
+        "Name": "Shivam",
         "IsMF": false,
         "Profile": "",
         "CurrentRoundScore": 0,

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Grid, Typography, AppBar, Toolbar, Avatar, Paper, Card, CardContent, CardActions, Button, Dialog, DialogContent, DialogContentText, TextField, DialogActions, Chip, List, IconButton } from '@material-ui/core';
+import { Grid, Typography, AppBar, Toolbar, Avatar, Paper, Card, CardContent, CardActions, Button, Dialog, DialogContent, DialogContentText, TextField, DialogActions, List, IconButton } from '@material-ui/core';
 import { ListItem, ListItemAvatar, FormGroup, ListItemText, FormControl, Checkbox, FormHelperText, FormControlLabel } from '@material-ui/core';
 // import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { withRouter } from "react-router-dom";
-import { setValue, getValue, getPlayers, setPlayers } from '../data-access-layer/storage-helper'
+import { setValue, getPlayers, setPlayers } from '../data-access-layer/storage-helper'
 import uuidv from 'uuid';
 import { Delete, KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
 
@@ -72,7 +72,7 @@ class GamesHome extends React.Component {
     }
     addNewPlayer() {
         try {
-            if (!this.state.playerName) throw "Bhadwe";
+            if (!this.state.playerName) throw new Error("Bhadwe");
             const player = {
                 ID: Math.random().toFixed(4) * 10000,
                 Name: this.state.playerName,
@@ -96,7 +96,7 @@ class GamesHome extends React.Component {
 
     deletePlayer(ID) {
         const allPlayers = this.state.Players;
-        const index = allPlayers.findIndex((player) => player.ID == ID);
+        const index = allPlayers.findIndex((player) => player.ID === ID);
         allPlayers.splice(index, 1);
         setPlayers(allPlayers);
         this.setState({ Players: allPlayers });

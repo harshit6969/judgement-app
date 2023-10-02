@@ -1,7 +1,6 @@
 import React from 'react';
-import { Grid, Typography, Container, AppBar, Toolbar, Avatar, Paper, FormControl, Card, CardContent, InputLabel, FormHelperText } from '@material-ui/core';
-import { Button, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction, Switch, Badge, Select, Input, MenuItem } from '@material-ui/core';
-import players from '../players.js';
+import { Grid, Typography, Container, AppBar, Toolbar, Avatar, Paper, FormControl } from '@material-ui/core';
+import { ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction, Switch, Badge, Select, Input, MenuItem } from '@material-ui/core';
 import MUIDataTable from "mui-datatables";
 import HorizontalLabelPositionBelowStepper from '../Components/StepperForm'
 import { setValue, getValue } from '../data-access-layer/storage-helper'
@@ -12,6 +11,7 @@ import AppsIcon from '@material-ui/icons/Apps';
 import RestoreIcon from '@material-ui/icons/Restore';
 import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
 import ScoreGraph from '../Components/ScoreGraph'
+import { toHHMMSS } from '../data-access-layer/game-helper';
 
 
 
@@ -45,7 +45,8 @@ class App extends React.Component {
             let Config = getValue(this.state.GameId)
             if (Config) {
                 Object.keys(Config).map(key => {
-                    this.setState({ [key]: Config[key] })
+                    this.setState({ [key]: Config[key] });
+                    return false;
                 })
             }
         } catch (error) {
@@ -73,6 +74,7 @@ class App extends React.Component {
                     "TotalScore": Player.TotalScore,
                 })
                 headers.push(Player.Name)
+                return false;
             })
             for (let i = CurrentPlayers[0].Scores.length - 1; i >= 0; i--) {
                 let table_row = []
@@ -93,10 +95,13 @@ class App extends React.Component {
             CurrentPlayers.map((Player, index) => {
                 Player.CurrentRoundScore = data[Player.ID]
                 TotalRoundScore += data[Player.ID]
+                return false;
             })
             this.setState({ Players: CurrentPlayers, RoundInProgress: true, openPlayerHandler: false, TotalRoundScore: TotalRoundScore });
         }
     }
+
+    
     render() {
         return (<Grid
             container
@@ -118,7 +123,7 @@ class App extends React.Component {
                                 Judgement
                             </Typography>
                             <Typography variant="h6">
-                                {this.state.seconds.toString().toHHMMSS()}
+                                {toHHMMSS(this.state.seconds.toString())}
                             </Typography>
                         </Grid>
                     </Container>

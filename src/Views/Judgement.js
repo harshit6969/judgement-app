@@ -58,6 +58,8 @@ class App extends React.Component {
     updateScorecard(data) {
         let CurrentPlayers = this.state.Players;
         if (this.state.RoundInProgress) {
+            const rotatedElement = CurrentPlayers.shift(); // Remove the first element
+            CurrentPlayers.push(rotatedElement); // Add the removed element to the end
             let headers = ["#"];
             let table_data = [];
             let chart_data = [];
@@ -83,8 +85,6 @@ class App extends React.Component {
             let Leaderboard = [...CurrentPlayers].sort((Player1, Player2) => {
                 return Player2.TotalScore - Player1.TotalScore
             })
-            const rotatedElement = CurrentPlayers.shift(); // Remove the first element
-            CurrentPlayers.push(rotatedElement); // Add the removed element to the end
             let state = { Players: CurrentPlayers, table_headers: headers, table_data: table_data, chart_data: chart_data, currentRounds: this.state.currentRounds + 1, RoundInProgress: false, openPlayerHandler: false, leaderboard: Leaderboard, seconds: this.state.seconds }
             this.setState(state);
             setValue(this.state.GameId, state);

@@ -1,12 +1,11 @@
 import React from 'react';
-import { Grid, Typography, Container, AppBar, Toolbar, Avatar, Paper, Link, Card, CardContent, CardActions, Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, SvgIcon, Chip } from '@material-ui/core';
-import { List, ListItem, ListItemAvatar, FormGroup, ListItemText, Collapse, IconButton, FormControl, Checkbox, FormHelperText, FormControlLabel } from '@material-ui/core';
-// import { Delete } from '../constants/images/user-delete-svgrepo-com.svg';
-import Delete from '../constants/images/icons8-delete-link-24.png'
-
+import { Grid, Typography, AppBar, Toolbar, Avatar, Paper, Card, CardContent, CardActions, Button, Dialog, DialogContent, DialogContentText, TextField, DialogActions, Chip, List, IconButton } from '@material-ui/core';
+import { ListItem, ListItemAvatar, FormGroup, ListItemText, FormControl, Checkbox, FormHelperText, FormControlLabel } from '@material-ui/core';
+// import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { withRouter } from "react-router-dom";
 import { setValue, getValue, getPlayers, setPlayers } from '../data-access-layer/storage-helper'
 import uuidv from 'uuid';
+import { Delete, KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
 
 class GamesHome extends React.Component {
     constructor(props) {
@@ -15,11 +14,15 @@ class GamesHome extends React.Component {
             Players: getPlayers(),
             Game: "Judgement",
             isCreateModalOpen: false,
+            isArrangeModalOpen: false,
             playerName: "",
             playerLogo: "",
+            GamePlayers: []
         }
         this.startGame = this.startGame.bind(this);
+        this.startSortedGame = this.startSortedGame.bind(this);
         this.toggleAddPlayer = this.toggleAddPlayer.bind(this);
+        this.toggleArrangeModal = this.toggleArrangeModal.bind(this);
         this.addNewPlayer = this.addNewPlayer.bind(this);
         this.resetPlayers = this.resetPlayers.bind(this);
         this.deletePlayer = this.deletePlayer.bind(this);
@@ -30,7 +33,7 @@ class GamesHome extends React.Component {
         CurrentPlayers.forEach(player => {
             player.IsPlaying = false;
         })
-        this.setState({ players: CurrentPlayers });
+        this.setState({ Players: CurrentPlayers });
     }
     startGame() {
         let CurrentPlayers = this.state.Players;
@@ -43,15 +46,25 @@ class GamesHome extends React.Component {
             }
         });
         if (TotalPlayers > 3 && TotalPlayers < 10) {
-            let GameId = uuidv.v4();
-            setValue(GameId, { Players: GamePlayers });
-            this.props.history.push('/' + this.state.Game + '/' + GameId);
+            this.setState({ GamePlayers: GamePlayers, isArrangeModalOpen: true });
+            // let GameId = uuidv.v4();
+            // setValue(GameId, { Players: GamePlayers });
+            // this.props.history.push('/' + this.state.Game + '/' + GameId);
         } else {
+            this.setState({ GamePlayers: [], isArrangeModalOpen: false });
             this.setState({ hasError: true, errorInfo: "Player count not suitable for the game" })
         }
     }
+    startSortedGame() {
+        let GameId = uuidv.v4();
+        setValue(GameId, { Players: this.state.GamePlayers });
+        this.props.history.push('/' + this.state.Game + '/' + GameId);
+    }
     toggleAddPlayer() {
         this.setState({ isCreateModalOpen: !this.state.isCreateModalOpen });
+    }
+    toggleArrangeModal() {
+        this.setState({ isArrangeModalOpen: !this.state.isArrangeModalOpen });
     }
     resetPlayers() {
         setPlayers();
@@ -61,7 +74,7 @@ class GamesHome extends React.Component {
         try {
             if (!this.state.playerName) throw "Bhadwe";
             const player = {
-                ID: Math.random().toFixed(2) * 100,
+                ID: Math.random().toFixed(4) * 10000,
                 Name: this.state.playerName,
                 IsMF: true,
                 Profile: this.state.playerLogo,
@@ -89,13 +102,15 @@ class GamesHome extends React.Component {
         this.setState({ Players: allPlayers });
     }
 
+
+
     render() {
         return (
             <Grid
                 container
                 direction="row"
                 justify="center"
-                alignItems="center">
+                alignItems="stretch">
                 <AppBar position="static">
                     <Toolbar>
                         <Typography variant="h6">
@@ -104,7 +119,7 @@ class GamesHome extends React.Component {
                     </Toolbar>
                 </AppBar>
 
-                <Container>
+                <Grid xs={10}>
                     <Paper elevation={3}>
                         <Card>
                             <CardContent>
@@ -116,14 +131,15 @@ class GamesHome extends React.Component {
                                                 control={<Checkbox checked={player.IsPlaying} value={player.Name} id={index} onChange={(e) => {
                                                     let CurrentPlayers = this.state.Players;
                                                     CurrentPlayers[e.target.id].IsPlaying = e.target.checked;
-                                                    this.setState({ players: CurrentPlayers })
+                                                    this.setState({ Players: CurrentPlayers })
                                                 }} />}
                                                 label={<ListItem button>
                                                     <ListItemAvatar>
                                                         <Avatar src={player.Profile} />
                                                     </ListItemAvatar>
                                                     <ListItemText primary={player.Name} />
-                                                    {player.IsCustom && <Chip label="Delete" onDelete={() => { this.deletePlayer(player.ID) }} />}
+
+                                                    {player.IsCustom && <IconButton onClick={() => { this.deletePlayer(player.ID) }}><Delete /></IconButton>}
                                                 </ListItem>}
                                             />
                                         )}
@@ -144,7 +160,39 @@ class GamesHome extends React.Component {
                             </CardActions>
                         </Card>
                     </Paper>
-                </Container>
+                </Grid>
+                <Dialog open={this.state.isArrangeModalOpen} onClose={this.toggleArrangeModal}>
+                    <DialogContent>
+                        <DialogContentText>
+                            Arrange players
+                        </DialogContentText>
+                        <List>
+                            {this.state.GamePlayers.map((player, index) =>
+                                <ListItem>
+                                    <ListItemAvatar>
+                                        <Avatar src={player.Profile} />
+                                    </ListItemAvatar>
+                                    <ListItemText primary={player.Name} />
+
+                                    <IconButton onClick={() => {
+                                        let players = this.state.GamePlayers;
+                                        [players[index], players[index - 1]] = [players[index - 1], players[index]];
+                                        this.setState({ GamePlayers: players });
+                                    }} hidden={index === 0}><KeyboardArrowUp /></IconButton>
+                                    <IconButton onClick={() => {
+                                        let players = this.state.GamePlayers;
+                                        [players[index], players[index + 1]] = [players[index + 1], players[index]];
+                                        this.setState({ GamePlayers: players });
+                                    }} hidden={index === this.state.GamePlayers.length - 1}><KeyboardArrowDown /></IconButton>
+                                </ListItem>
+                            )}
+                        </List>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="contained" color="secondary" onClick={this.toggleArrangeModal}>Cancel</Button>
+                        <Button variant="contained" color="primary" onClick={this.startSortedGame}>Start</Button>
+                    </DialogActions>
+                </Dialog>
                 <Dialog open={this.state.isCreateModalOpen} onClose={this.toggleAddPlayer}>
                     <DialogContent>
                         <DialogContentText>

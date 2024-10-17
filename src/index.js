@@ -37,7 +37,7 @@ ReactDOM.render(<Router history={hist}>
     <Route exact path="/Home">
       <Home/>
     </Route>
-    <Route path="/Judgement">
+    <Route path="/judgement-app">
       <Judgement/>
     </Route>
     <Route path="*">

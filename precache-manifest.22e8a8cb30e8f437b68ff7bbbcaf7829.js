@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0ebbdcc9d26ec97a779c47fc6066a86c",
+    "revision": "a53b33098af538662c52d3c7dc5c2fa0",
     "url": "/judgement-app/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/judgement-app/static/css/2.22a7d4ef.chunk.css"
   },
   {
-    "revision": "360be8465f792c306098",
+    "revision": "9bf73a73add6b50a96d0",
     "url": "/judgement-app/static/css/main.f9280981.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/judgement-app/static/js/2.a93c5639.chunk.js"
   },
   {
-    "revision": "360be8465f792c306098",
-    "url": "/judgement-app/static/js/main.e85e8942.chunk.js"
+    "revision": "9bf73a73add6b50a96d0",
+    "url": "/judgement-app/static/js/main.f82bd1b6.chunk.js"
   },
   {
     "revision": "e6ca38aa13d5163e3edb",

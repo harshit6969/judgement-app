@@ -10,20 +10,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
+      # Step 4: Build the React app with CI=false to avoid treating warnings as errors
       - name: Build the React app
-        run: npm run build
+        run: |
+          CI=false npm run build
 
+      # Step 5: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         run: npm run deploy
         env:

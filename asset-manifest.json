@@ -1,22 +1,25 @@
 {
   "files": {
     "main.css": "/judgement-app/static/css/main.f9280981.chunk.css",
-    "main.js": "/judgement-app/static/js/main.c3f412ea.chunk.js",
-    "main.js.map": "/judgement-app/static/js/main.c3f412ea.chunk.js.map",
+    "main.js": "/judgement-app/static/js/main.f82bd1b6.chunk.js",
+    "main.js.map": "/judgement-app/static/js/main.f82bd1b6.chunk.js.map",
     "runtime~main.js": "/judgement-app/static/js/runtime~main.3d33b236.js",
     "runtime~main.js.map": "/judgement-app/static/js/runtime~main.3d33b236.js.map",
     "static/css/2.22a7d4ef.chunk.css": "/judgement-app/static/css/2.22a7d4ef.chunk.css",
-    "static/js/2.b2fba284.chunk.js": "/judgement-app/static/js/2.b2fba284.chunk.js",
-    "static/js/2.b2fba284.chunk.js.map": "/judgement-app/static/js/2.b2fba284.chunk.js.map",
+    "static/js/2.a93c5639.chunk.js": "/judgement-app/static/js/2.a93c5639.chunk.js",
+    "static/js/2.a93c5639.chunk.js.map": "/judgement-app/static/js/2.a93c5639.chunk.js.map",
     "index.html": "/judgement-app/index.html",
-    "precache-manifest.22f438e265470c377001b82859ea6092.js": "/judgement-app/precache-manifest.22f438e265470c377001b82859ea6092.js",
+    "precache-manifest.22e8a8cb30e8f437b68ff7bbbcaf7829.js": "/judgement-app/precache-manifest.22e8a8cb30e8f437b68ff7bbbcaf7829.js",
     "service-worker.js": "/judgement-app/service-worker.js",
     "static/css/2.22a7d4ef.chunk.css.map": "/judgement-app/static/css/2.22a7d4ef.chunk.css.map",
     "static/css/main.f9280981.chunk.css.map": "/judgement-app/static/css/main.f9280981.chunk.css.map",
+    "static/media/Baby.jpg": "/judgement-app/static/media/Baby.9bea3725.jpg",
     "static/media/Harshit.jpg": "/judgement-app/static/media/Harshit.a15bf8da.jpg",
     "static/media/Maadi.jpg": "/judgement-app/static/media/Maadi.8ad40e89.jpg",
+    "static/media/Mudit.jpg": "/judgement-app/static/media/Mudit.179b5202.jpg",
     "static/media/Parmar.jpg": "/judgement-app/static/media/Parmar.b6aad3d5.jpg",
     "static/media/Shanky.jpg": "/judgement-app/static/media/Shanky.dd0e4a66.jpg",
+    "static/media/Shivi.jpg": "/judgement-app/static/media/Shivi.a5f30007.jpg",
     "static/media/Vikas.jpg": "/judgement-app/static/media/Vikas.783a3bfc.jpg"
   }
 }

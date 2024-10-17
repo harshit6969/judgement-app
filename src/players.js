@@ -1,6 +1,5 @@
 import Parmar from '../src/constants/images/Parmar.jpg'
 import Maadi from '../src/constants/images/Maadi.jpg'
-import Nabh from '../src/constants/images/Nabh.jpg'
 import Harshit from '../src/constants/images/Harshit.jpg'
 import Shanky from '../src/constants/images/Shanky.jpg'
 import Baby from '../src/constants/images/Baby.jpg'

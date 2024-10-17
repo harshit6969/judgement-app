@@ -1,9 +1,9 @@
 import React from 'react';
-import { Grid, Typography, Container, AppBar, Toolbar, Avatar, Paper, Link, Card, CardContent, CardActions, Button } from '@material-ui/core';
-import { List, ListItem, ListItemAvatar, FormGroup, ListItemText, Collapse, IconButton, FormControl, Checkbox, FormHelperText, FormControlLabel } from '@material-ui/core';
+import { Grid, Typography, Container, AppBar, Toolbar, Avatar, Paper, Card, CardContent, CardActions, Button } from '@material-ui/core';
+import { ListItem, ListItemAvatar, FormGroup, ListItemText, FormControl, Checkbox, FormHelperText, FormControlLabel } from '@material-ui/core';
 import players from '../players.js';
 import {withRouter } from "react-router-dom";
-import { setValue, getValue } from '../data-access-layer/storage-helper'
+import { setValue } from '../data-access-layer/storage-helper'
 import uuidv from 'uuid';
 
 class GamesHome extends React.Component {

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Grid, Typography, Container, AppBar, Toolbar, Avatar, Paper, FormControl, Card, CardContent, InputLabel, FormHelperText } from '@material-ui/core';
-import { Button, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction, Switch, Badge, Select, Input, MenuItem } from '@material-ui/core';
-import players from '../players.js';
+import { Grid, Typography, Container, AppBar, Toolbar, Avatar, Paper, FormControl } from '@material-ui/core';
+import { ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction, Switch, Badge, Select, Input, MenuItem } from '@material-ui/core';
 import MUIDataTable from "mui-datatables";
 import HorizontalLabelPositionBelowStepper from '../Components/StepperForm'
 import { setValue, getValue } from '../data-access-layer/storage-helper'
@@ -44,9 +43,8 @@ class App extends React.Component {
             this.interval = setInterval(() => this.tick(), 1000);
             let Config = getValue(this.state.GameId)
             if (Config) {
-                Object.keys(Config).map(key => {
-                    this.setState({ [key]: Config[key] })
-                })
+                Object.keys(Config).map(key =>
+                    this.setState({ [key]: Config[key] }))
             }
         } catch (error) {
             this.props.history.push('/')
@@ -61,6 +59,7 @@ class App extends React.Component {
             let headers = ["#"];
             let table_data = [];
             let chart_data = [];
+            // eslint-disable-next-line array-callback-return
             CurrentPlayers.map((Player, index) => {
                 Player.CurrentRoundScore = data[Player.ID] ? Player.CurrentRoundScore += 10 : 0;
                 Player.Scores.push(Player.CurrentRoundScore)
@@ -88,6 +87,7 @@ class App extends React.Component {
             setValue(this.state.GameId, state);
         } else {
             let TotalRoundScore = 0;
+            // eslint-disable-next-line array-callback-return
             CurrentPlayers.map((Player, index) => {
                 Player.CurrentRoundScore = data[Player.ID]
                 TotalRoundScore += data[Player.ID]

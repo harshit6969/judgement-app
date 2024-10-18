@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+// import './index.css';
 import * as serviceWorker from './serviceWorker';
-import 'bootstrap/dist/css/bootstrap.css';
 import { createBrowserHistory } from "history";
 
 import Home from './Views/Home';
@@ -31,13 +30,10 @@ const hist = createBrowserHistory();
 
 ReactDOM.render(<Router history={hist}>
     <Switch>
-      {/* {routes.map((route) => (
-<Route exact key={route.Name} component={route.View} path={route.Route} />
-  ))} */}
     <Route exact path="/Home">
       <Home/>
     </Route>
-    <Route path="/Judgement">
+    <Route path="/judgement-app">
       <Judgement/>
     </Route>
     <Route path="*">

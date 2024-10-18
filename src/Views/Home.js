@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import {
   Grid,
   Card,
@@ -17,9 +17,9 @@ import {
   Avatar,
 } from "@material-ui/core";
 import { v4 as uuidv } from "uuid";
-import { usePlayersStore } from "../store/playerStore";
 import { withRouter } from "react-router-dom";
 import { setValue } from "../data-access-layer/storage-helper";
+import players from "../constants/players";
 
 // Utility functions
 function not(a, b) {
@@ -35,16 +35,11 @@ function union(a, b) {
 }
 
 const GamesHome = ({ history }) => {
-  const { players } = usePlayersStore(); // Zustand state management
 
   // Local state for checked items, available and selected players
   const [checked, setChecked] = useState([]);
-  const [availablePlayers, setAvailablePlayers] = useState([]);
+  const [availablePlayers, setAvailablePlayers] = useState(players);
   const [selectedPlayers, setSelectedPlayers] = useState([]);
-
-  useEffect(() => {
-    setAvailablePlayers(players); // Set available players on mount
-  }, [players]);
 
   // Function to toggle selection for a player
   const handleToggle = useCallback(

@@ -96,7 +96,7 @@ export default class ScoreGraphWithLeaderboard extends React.PureComponent {
         {/* Graph Section */}
         <Grid item xs={12} sm={9}>
           <div style={{ width: "100%", height: "100%" }}>
-            {chartData.length > 0 && data.length > 0 ? (
+            {chartData.length > 0 && data.length > 0 && (
               <Chart data={chartData} style={{ height: "100%" }}>
                 <ArgumentAxis />
                 <ValueAxis />
@@ -111,8 +111,6 @@ export default class ScoreGraphWithLeaderboard extends React.PureComponent {
                   />
                 ))}
               </Chart>
-            ) : (
-              <div>No data available</div>
             )}
           </div>
         </Grid>

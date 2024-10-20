@@ -43,7 +43,7 @@ class App extends React.Component {
   }
   componentDidMount() {
     try {
-      //   this.interval = setInterval(() => this.tick(), 1000);
+      this.interval = setInterval(() => this.tick(), 1000);
       let Config = getValue(this.state.GameId);
       if (Config) {
         Object.keys(Config).map((key) => this.setState({ [key]: Config[key] }));
@@ -56,23 +56,28 @@ class App extends React.Component {
     clearInterval(this.interval);
   }
   updateScorecard(data) {
-    let { Players, RoundInProgress, currentRounds, seconds, GameId } = this.state;
+    let { Players, RoundInProgress, currentRounds, seconds, GameId } =
+      this.state;
     let updatedPlayers = [...Players]; // Avoid directly mutating state
     let updatedState = {};
-  
+
     try {
       if (RoundInProgress) {
         // Process player scores and update them
         updatedPlayers.forEach((Player) => {
-          Player.CurrentRoundScore = data[Player.ID] ? Player.CurrentRoundScore + 10 : 0;
+          Player.CurrentRoundScore = data[Player.ID]
+            ? Player.CurrentRoundScore + 10
+            : 0;
           Player.Scores.push(Player.CurrentRoundScore);
           Player.TotalScore += Player.CurrentRoundScore;
           Player.CurrentRoundScore = 0;
         });
-  
+
         // Sort leaderboard by total score
-        let Leaderboard = updatedPlayers.sort((Player1, Player2) => Player2.TotalScore - Player1.TotalScore);
-  
+        let Leaderboard = updatedPlayers.sort(
+          (Player1, Player2) => Player2.TotalScore - Player1.TotalScore
+        );
+
         updatedState = {
           Players: updatedPlayers,
           currentRounds: currentRounds + 1,
@@ -88,7 +93,7 @@ class App extends React.Component {
           Player.CurrentRoundScore = data[Player.ID];
           TotalRoundScore += data[Player.ID];
         });
-  
+
         updatedState = {
           Players: updatedPlayers,
           RoundInProgress: true,
@@ -102,10 +107,8 @@ class App extends React.Component {
       setValue(GameId, { ...this.state, ...updatedState });
     }
   }
-  
 
   render() {
-    console.log(this.state);
     return (
       <Grid container direction="row" alignItems="center">
         <AppBar position="static">

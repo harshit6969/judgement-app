@@ -103,7 +103,6 @@ getOrderedPlayers() {
     ...players.slice(0, startingIndex),
   ];
 
-  console.log('Reordered Players:', reorderedPlayers); // Debugging log to see reordered players
   return reorderedPlayers;
 }
 

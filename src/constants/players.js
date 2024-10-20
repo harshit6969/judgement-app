@@ -2,9 +2,8 @@ import Parmar from './images/Parmar.jpg';
 import Maadi from './images/Maadi.jpg'
 import Harshit from './images/Harshit.jpg'
 import Shanky from './images/Shanky.jpg'
-import Shivi from './images/Shivi.jpg'
 import Vikas from './images/Vikas.jpg'
-
+import Shivam from './images/Shivam.jpeg'
 const players = [
     {
         "ID": 0,
@@ -46,20 +45,10 @@ const players = [
         "ColorCode": "#2e7d32"
     },
     {
-        "ID": 4,
-        "Name": "Himanshu",
-        "IsMF": false,
-        "Profile": "",
-        "CurrentRoundScore": 0,
-        "TotalScore": 0,
-        Scores: [],
-        "ColorCode": "#f57c00"
-    },
-    {
         "ID": 6,
-        "Name": "Shivi",
+        "Name": "Shivam",
         "IsMF": false,
-        "Profile": Shivi,
+        "Profile": Shivam,
         "CurrentRoundScore": 0,
         "TotalScore": 0,
         Scores: [],

@@ -30,10 +30,7 @@ const hist = createBrowserHistory();
 
 ReactDOM.render(<Router history={hist}>
     <Switch>
-    <Route exact path="/Home">
-      <Home/>
-    </Route>
-    <Route path="/judgement-app">
+    <Route path="/judgement-app/:id">
       <Judgement/>
     </Route>
     <Route path="*">

@@ -22,7 +22,7 @@ jobs:
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       # Step 4: Build the React app with CI=false to prevent warnings from breaking the build
       - name: Build the React app

@@ -22,11 +22,11 @@ jobs:
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: yarn install
 
       # Step 4: Build the React app with CI=false to prevent warnings from breaking the build
       - name: Build the React app
-        run: npm run build
+        run: yarn build
 
       # Step 5: Deploy to GitHub Pages using peaceiris/actions-gh-pages
       - name: Deploy to GitHub Pages

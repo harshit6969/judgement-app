@@ -26,8 +26,7 @@ jobs:
 
       # Step 4: Build the React app with CI=false to prevent warnings from breaking the build
       - name: Build the React app
-        run: |
-          CI=false npm run build
+        run: npm run build
 
       # Step 5: Deploy to GitHub Pages using peaceiris/actions-gh-pages
       - name: Deploy to GitHub Pages

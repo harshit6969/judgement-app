@@ -1,43 +1,134 @@
-import * as React from 'react';
+import * as React from "react";
+import {
+  Grid,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  ListItemSecondaryAction,
+} from "@material-ui/core";
 import {
   Chart,
-  BarSeries,
+  LineSeries,
   ArgumentAxis,
   ValueAxis,
-} from '@devexpress/dx-react-chart-material-ui';
-import { Animation } from '@devexpress/dx-react-chart';
+} from "@devexpress/dx-react-chart-material-ui";
 
-
-export default class ScoreGraph extends React.PureComponent {
+export default class ScoreGraphWithLeaderboard extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: this.props.scores
+      data: this.props.scores || [], // Initialize state from props
+      chartData: [],
     };
   }
-  componentDidMount(){
+
+  componentDidMount() {
+    this.prepareChartData(); // Prepare initial chart data
   }
-  render() {
 
-    // if(this.props.RoundInProgress){
-    const { data: chartData } = this.state;
-    if(chartData.length > 0){
-      return(<Chart
-        data={chartData}
-      >
-        <ArgumentAxis />
-        <ValueAxis max={140} />
-               <BarSeries 
-        valueField="TotalScore"
-        argumentField="Name"
-        color="#3f51b5"
-        />
-        <Animation />
-      </Chart>)
+  componentDidUpdate(prevProps) {
+    // Update chart data when scores change
+    if (prevProps.scores !== this.props.scores) {
+      this.setState({ data: this.props.scores }, () => {
+        this.prepareChartData();
+      });
     }
-    // }
-    return(null);
+  }
 
+  // Prepare chart data by accumulating scores for each round
+  prepareChartData() {
+    const { data } = this.state;
+
+    if (!data || data.length === 0) {
+      this.setState({ chartData: [] });
+      return;
+    }
+
+    // Find the maximum number of rounds among players
+    const rounds = data[0].Scores?.length || 0;
+
+    let chartData = [];
+
+    // Initialize the chart so all players start at 0 in round 1
+    for (let i = 0; i < rounds; i++) {
+      let roundData = { round: i + 1 }; // `round` will be the argument field
+
+      // Loop through each player
+      data.forEach((player) => {
+        let cumulativeScore = 0;
+
+        // Ensure all players' scores start at 0 for the first round
+        if (i === 0) {
+          roundData[player.Name] = 0;
+        } else {
+          // Accumulate scores for subsequent rounds
+          cumulativeScore = player.Scores?.slice(0, i + 1).reduce(
+            (acc, score) => acc + (score || 0), 0
+          ) || 0;
+          roundData[player.Name] = cumulativeScore;
+        }
+      });
+
+      chartData.push(roundData); // Add the round data to the chart data
+    }
+
+    this.setState({ chartData });
+  }
+
+  render() {
+    const { chartData, data } = this.state;
+    const leaderboard = this.props.scores || [];
+
+    return (
+      <Grid container spacing={2}>
+        {/* Graph Section */}
+        <Grid item xs={12} sm={8}>
+          <div style={{ width: "100%", height: "100%" }}>
+            <Chart data={chartData} style={{ height: "100%" }}>
+              <ArgumentAxis />
+              <ValueAxis />
+              {/* Render a line for each player */}
+              {data.map((player) => (
+                <LineSeries
+                  key={player.Name}
+                  valueField={player.Name} // player.Name as value field
+                  argumentField="round" // round as argument field
+                  name={player.Name} // Optional: add name for series legend
+                />
+              ))}
+            </Chart>
+          </div>
+        </Grid>
+
+        {/* Leaderboard Section */}
+        <Grid
+          container
+          item
+          xs={12}
+          sm={4}
+          direction="column"
+          justifyContent="space-evenly"
+          style={{ listStyleType: "none" }}
+        >
+          {leaderboard.map((Player) => (
+            <ListItem key={Player.Name}>
+              <ListItemAvatar>
+                <Avatar src={Player.Profile} />
+              </ListItemAvatar>
+              <ListItemText primary={Player.Name} />
+              <ListItemSecondaryAction>
+                <ListItemAvatar>
+                  <Avatar style={{ backgroundColor: Player.ColorCode }}>
+                    {Player.TotalScore}
+                  </Avatar>
+                </ListItemAvatar>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
+        </Grid>
+      </Grid>
+    );
   }
 }

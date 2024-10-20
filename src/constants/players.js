@@ -4,6 +4,8 @@ import Harshit from './images/Harshit.jpg'
 import Shanky from './images/Shanky.jpg'
 import Vikas from './images/Vikas.jpg'
 import Shivam from './images/Shivam.jpeg'
+import Billu from './images/Billu.jpeg'
+
 const players = [
     {
         "ID": 0,
@@ -22,7 +24,7 @@ const players = [
         "Profile": Shanky,
         "CurrentRoundScore": 0,
         "TotalScore": 0,        Scores: [],
-        "ColorCode": "#37474f"
+        "ColorCode": "#B89A43"
     },
     {
         "ID": 2,
@@ -52,7 +54,7 @@ const players = [
         "CurrentRoundScore": 0,
         "TotalScore": 0,
         Scores: [],
-        "ColorCode": "#424242"
+        "ColorCode": "#F205FF"
     },
     {
         "ID": 8,
@@ -62,7 +64,17 @@ const players = [
         "CurrentRoundScore": 0,
         "TotalScore": 0,
         Scores: [],
-        "ColorCode": "#424242"
+        "ColorCode": "#581428"
+    },
+    {
+        "ID": 9,
+        "Name": "Player 1",
+        "IsMF": false,
+        "Profile": Billu,
+        "CurrentRoundScore": 0,
+        "TotalScore": 0,
+        Scores: [],
+        "ColorCode": "#28B5CD"
     }
 ]
 export default players;

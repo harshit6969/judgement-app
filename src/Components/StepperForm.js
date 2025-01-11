@@ -29,6 +29,7 @@ class StepperForm extends React.Component {
       hasError: false,
       errorInfo: null,
       TotalHands: 0,
+      MaxHands: parseInt(52 / this.props.players.length),
     };
     this.handleBeforeRoundSubmit = this.handleBeforeRoundSubmit.bind(this);
     this.handleAfterRoundSubmit = this.handleAfterRoundSubmit.bind(this);
@@ -48,10 +49,7 @@ class StepperForm extends React.Component {
           break;
         }
       }
-      if (
-        flag &&
-        parseInt(52 / this.state.players.length) !== parseInt(TotalHands)
-      ) {
+      if (flag && this.state.MaxHands !== parseInt(TotalHands)) {
         this.props.handleScoreUpload(this.state);
       } else {
         this.setState({
@@ -90,21 +88,22 @@ class StepperForm extends React.Component {
   }
 
   // Function to reorder players array starting from the current round
-getOrderedPlayers() {
-  const { players } = this.state;
-  const { currentRounds } = this.props;
+  getOrderedPlayers() {
+    const { players } = this.state;
+    const { currentRounds } = this.props;
 
-  // Ensure currentRounds doesn't exceed the number of players
-  const startingIndex = currentRounds % players.length;
+    // Ensure currentRounds doesn't exceed the number of players
+    const startingIndex = currentRounds % players.length;
+    
+    // Create an array with players reordered starting from index `currentRounds`
+    const reorderedPlayers = [
+      ...players.slice(startingIndex),
+      ...players.slice(0, startingIndex),
+    ];
+    console.log(startingIndex, reorderedPlayers)
 
-  // Create an array with players reordered starting from index `currentRounds`
-  const reorderedPlayers = [
-    ...players.slice(startingIndex),
-    ...players.slice(0, startingIndex),
-  ];
-
-  return reorderedPlayers;
-}
+    return reorderedPlayers;
+  }
 
   render() {
     const orderedPlayers = this.getOrderedPlayers();
@@ -204,7 +203,7 @@ getOrderedPlayers() {
                       input={<Input id={Player.ID} />}
                       style={{ minWidth: "200px" }}
                     >
-                      {[...Array(8).keys()].map((i) => (
+                      {[...Array(this.state.MaxHands + 1).keys()].map((i) => (
                         <MenuItem key={i} value={i}>
                           {i}
                         </MenuItem>

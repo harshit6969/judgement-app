@@ -74,7 +74,7 @@ class App extends React.Component {
         });
 
         // Sort leaderboard by total score
-        let Leaderboard = updatedPlayers.sort(
+        let Leaderboard = [...updatedPlayers].sort(
           (Player1, Player2) => Player2.TotalScore - Player1.TotalScore
         );
 

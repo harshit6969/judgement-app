@@ -9,7 +9,7 @@ import Judgement from './Views/Judgement';
 
 
 import {
-    BrowserRouter as Router,
+    HashRouter as Router,
     Switch,
     Route
   } from "react-router-dom";

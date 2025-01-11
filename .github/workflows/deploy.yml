@@ -3,7 +3,7 @@ name: Deploy React App to GitHub Pages
 on:
   push:
     branches:
-      - master  # Trigger deployment on push to master
+      - master # Trigger deployment on push to the master branch
 
 jobs:
   build-and-deploy:
@@ -18,19 +18,28 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '16' # Use Node.js version 16 LTS
 
-      # Step 3: Install dependencies
+      # Step 3: Cache npm dependencies
+      - name: Cache NPM dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Step 4: Install dependencies with npm and handle peer-deps issues
       - name: Install dependencies
-        run: yarn install
+        run: npm install --legacy-peer-deps
 
-      # Step 4: Build the React app with CI=false to prevent warnings from breaking the build
+      # Step 5: Build the React app
       - name: Build the React app
-        run: yarn build
+        run: CI=false npm run build
 
-      # Step 5: Deploy to GitHub Pages using peaceiris/actions-gh-pages
+      # Step 6: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          github_token: ${{ secrets.GITHUB_TOKEN }} # Use the GitHub token for authentication
+          publish_dir: ./build # Directory containing the build output

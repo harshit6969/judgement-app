@@ -99,7 +99,7 @@ export default class ScoreGraphWithLeaderboard extends React.PureComponent {
             {chartData.length > 0 && data.length > 0 && (
               <Chart data={chartData} style={{ height: "100%" }}>
                 <ArgumentAxis />
-                <ValueAxis />
+                <ValueAxis position="right"/>
                 {/* Render a line for each player */}
                 {data.map((player) => (
                   <LineSeries

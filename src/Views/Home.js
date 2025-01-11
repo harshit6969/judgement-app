@@ -153,13 +153,7 @@ const GamesHome = ({ history }) => {
   );
 
   return (
-    <Grid
-      container
-      spacing={2}
-      justifyContent="center"
-      alignItems="center"
-      style={{ height: "95vh", display: "flex", flexDirection: "column" }} // Full height with flexbox
-    >
+    <>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6">Home</Typography>
@@ -181,7 +175,7 @@ const GamesHome = ({ history }) => {
             alignItems="stretch" // Stretch to fill height
             style={{ flex: 1 }}
           >
-            <Grid item xs={5} style={{ height: "100%" }}>
+            <Grid item xs={5} style={{ minHeight: "100%" }}>
               {customList("Available Players", availablePlayers)}
             </Grid>
             <Grid
@@ -214,7 +208,7 @@ const GamesHome = ({ history }) => {
                 &lt;
               </Button>
             </Grid>
-            <Grid item xs={5} style={{ height: "100%" }}>
+            <Grid item xs={5} style={{ minHeight: "100%" }}>
               {customList("Selected Players", selectedPlayers)}
             </Grid>
           </Grid>
@@ -229,7 +223,7 @@ const GamesHome = ({ history }) => {
           Start Game
         </Button>
       </Container>
-    </Grid>
+    </>
   );
 };
 

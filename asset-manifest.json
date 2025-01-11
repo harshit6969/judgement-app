@@ -1,17 +1,21 @@
 {
   "files": {
-    "main.js": "/judgement-app/static/js/main.12415d2e.chunk.js",
-    "main.js.map": "/judgement-app/static/js/main.12415d2e.chunk.js.map",
+    "main.js": "/judgement-app/static/js/main.a304785d.chunk.js",
+    "main.js.map": "/judgement-app/static/js/main.a304785d.chunk.js.map",
     "runtime-main.js": "/judgement-app/static/js/runtime-main.c9a1d715.js",
     "runtime-main.js.map": "/judgement-app/static/js/runtime-main.c9a1d715.js.map",
     "static/js/2.3f53a261.chunk.js": "/judgement-app/static/js/2.3f53a261.chunk.js",
     "static/js/2.3f53a261.chunk.js.map": "/judgement-app/static/js/2.3f53a261.chunk.js.map",
     "index.html": "/judgement-app/index.html",
     "static/js/2.3f53a261.chunk.js.LICENSE.txt": "/judgement-app/static/js/2.3f53a261.chunk.js.LICENSE.txt",
+    "static/media/Arushi.8c22d86b.jpg": "/judgement-app/static/media/Arushi.8c22d86b.jpg",
     "static/media/Billu.beeb4659.jpeg": "/judgement-app/static/media/Billu.beeb4659.jpeg",
     "static/media/Harshit.6d6ba388.jpg": "/judgement-app/static/media/Harshit.6d6ba388.jpg",
+    "static/media/Himanshu.b66e4406.jpg": "/judgement-app/static/media/Himanshu.b66e4406.jpg",
     "static/media/Maadi.295369c5.jpg": "/judgement-app/static/media/Maadi.295369c5.jpg",
     "static/media/Parmar.e4333bff.jpg": "/judgement-app/static/media/Parmar.e4333bff.jpg",
+    "static/media/Piddu.e9d8836b.jpg": "/judgement-app/static/media/Piddu.e9d8836b.jpg",
+    "static/media/Santru.078d9faf.JPG": "/judgement-app/static/media/Santru.078d9faf.JPG",
     "static/media/Shanky.6a05c1a0.jpg": "/judgement-app/static/media/Shanky.6a05c1a0.jpg",
     "static/media/Shivam.90d3ce73.jpeg": "/judgement-app/static/media/Shivam.90d3ce73.jpeg",
     "static/media/Vikas.d6fcd5d4.jpg": "/judgement-app/static/media/Vikas.d6fcd5d4.jpg"
@@ -19,6 +23,6 @@
   "entrypoints": [
     "static/js/runtime-main.c9a1d715.js",
     "static/js/2.3f53a261.chunk.js",
-    "static/js/main.12415d2e.chunk.js"
+    "static/js/main.a304785d.chunk.js"
   ]
 }

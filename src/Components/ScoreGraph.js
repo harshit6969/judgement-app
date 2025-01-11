@@ -71,8 +71,7 @@ export default class ScoreGraphWithLeaderboard extends React.PureComponent {
         // If the player has scores and the score for the current round exists, calculate the cumulative score
         if (player.Scores && player.Scores.length > 0) {
           cumulativeScore = player.Scores.slice(0, i + 1).reduce(
-            (acc, score) =>
-              acc + (score !== undefined && score !== null ? score : 0),
+            (acc, score) => acc + (score || 0),
             0
           );
         }

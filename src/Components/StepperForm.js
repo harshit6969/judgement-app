@@ -2,16 +2,15 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import {
   FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Checkbox,
   FormControlLabel,
   FormLabel,
   FormGroup,
+  Grid,
+  Slider,
+  Typography,
 } from "@material-ui/core";
 import {
-  Input,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -51,10 +50,16 @@ class StepperForm extends React.Component {
       }
       if (flag && this.state.MaxHands !== parseInt(TotalHands)) {
         this.props.handleScoreUpload(this.state);
-      } else {
+      } else if(this.state.MaxHands === parseInt(TotalHands)) {
         this.setState({
           hasError: true,
           errorInfo: "Invalid hands:" + TotalHands.toString(),
+          activeStep: 0,
+        });
+      } else {
+        this.setState({
+          hasError: true,
+          errorInfo: "Sabko bharne do",
           activeStep: 0,
         });
       }
@@ -94,14 +99,12 @@ class StepperForm extends React.Component {
 
     // Ensure currentRounds doesn't exceed the number of players
     const startingIndex = currentRounds % players.length;
-    
+
     // Create an array with players reordered starting from index `currentRounds`
     const reorderedPlayers = [
       ...players.slice(startingIndex),
       ...players.slice(0, startingIndex),
     ];
-    console.log(startingIndex, reorderedPlayers)
-
     return reorderedPlayers;
   }
 
@@ -132,7 +135,7 @@ class StepperForm extends React.Component {
                           value={player.ID}
                         />
                       }
-                      label={player.Name}
+                      label={`${player.Name} - ${player.CurrentRoundScore}`}
                       key={player.ID}
                     />
                   ))}
@@ -153,8 +156,8 @@ class StepperForm extends React.Component {
                 Submit
               </Button>
               <Button
-                variant="container"
-                color="secondary"
+                variant="contained"
+                color="error"
                 onClick={this.props.handleBack}
               >
                 Back
@@ -166,57 +169,103 @@ class StepperForm extends React.Component {
     }
 
     return (
-      <Dialog disableBackdropClick disableEscapeKeyDown open={true}>
+      <Dialog
+        disableBackdropClick
+        fullWidth
+        maxWidth={"lg"}
+        disableEscapeKeyDown
+        open={true}
+        style={{
+          maxHeight: "90%",
+          overflow: "hidden",
+        }}
+      >
         <DialogTitle>
-          Hands for Round: <strong>{this.props.currentRounds + 1}</strong>{" "}
+          Round: <strong>{this.props.currentRounds + 1}</strong> | Hands:{" "}
+          {this.state.TotalHands}
         </DialogTitle>
-        <DialogContent>
-          <form>
-            <FormLabel component="legend">
-              Total Hands: {this.state.TotalHands}
-            </FormLabel>
+        <DialogContent
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            overflowY: "auto", // Allow scrolling for content
+            height: "60vh", // Adjust height dynamically
+          }}
+        >
+          <Grid
+            container
+            direction="column"
+            justifyContent="space-between"
+            alignItems="stretch"
+            spacing={1}
+            style={{ height: "100%", paddingTop: "5%",}}
+          >
+            {orderedPlayers.map((Player) => (
+              <Grid
+                container
+                direction="row"
+                justifyContent="space-between"
+                spacing={2}
+                key={Player.ID}
+                style={{color: Player.ColorCode}}
+              >
+                {/* Player Name */}
+                <Grid item xs={12} sm={2} md={1}>
+                  <Typography variant="subtitle1">
+                    {Player.Name}
+                  </Typography>
+                </Grid>
 
-            <FormControl required component="fieldset">
-              <FormGroup>
-                {orderedPlayers.map((Player) => (
-                  <FormControl required key={Player.ID}>
-                    <InputLabel>{Player.Name}</InputLabel>
-                    <Select
-                      id={Player.ID}
-                      name={Player.ID}
-                      onChange={(e) => {
-                        let players = this.state.players;
-                        let TotalHands = e.target.value;
-                        for (let player of players) {
-                          if (this.state.hasOwnProperty(player.ID)) {
-                            if (!(e.target.name === player.ID)) {
-                              TotalHands += this.state[player.ID];
-                            }
+                {/* Slider */}
+                <Grid
+                  item
+                  xs={12}
+                  sm={10}
+                  md={11}
+                  container
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Slider
+                    value={this.state[Player.ID]}
+                    onChange={(e, value) => {
+                      let players = this.state.players;
+                      let TotalHands = value;
+                      for (let player of players) {
+                        if (this.state.hasOwnProperty(player.ID)) {
+                          if (!(Player.ID === player.ID)) {
+                            TotalHands += this.state[player.ID];
                           }
                         }
-                        this.setState({
-                          [Player.ID]: e.target.value,
-                          TotalHands: TotalHands,
-                        });
-                      }}
-                      value={this.state[Player.ID]}
-                      input={<Input id={Player.ID} />}
-                      style={{ minWidth: "200px" }}
-                    >
-                      {[...Array(this.state.MaxHands + 1).keys()].map((i) => (
-                        <MenuItem key={i} value={i}>
-                          {i}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                ))}
-              </FormGroup>
-              <FormHelperText error={this.state.hasError}>
+                      }
+                      this.setState({
+                        [Player.ID]: value,
+                        TotalHands: TotalHands,
+                      });
+                    }}
+                    min={0}
+                    max={this.state.MaxHands}
+                    step={1}
+                    marks={[...Array(this.state.MaxHands + 1).keys()].map(
+                      (i) => ({
+                        value: i,
+                        label: i.toString(),
+                      })
+                    )}
+                    valueLabelDisplay={this.state[Player.ID] !== undefined ? "on" : "off"}
+                    style={{
+                      width: "100%",
+                      color: Player.ColorCode, // Dynamic slider color
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            ))}
+          </Grid>
+          <FormHelperText error={this.state.hasError}>
                 {this.state.errorInfo}
               </FormHelperText>
-            </FormControl>
-          </form>
         </DialogContent>
         <DialogActions>
           <Button
@@ -227,8 +276,8 @@ class StepperForm extends React.Component {
             Submit
           </Button>
           <Button
-            variant="container"
-            color="secondary"
+            variant="contained"
+            color="warning"
             onClick={this.props.handleBack}
           >
             Back

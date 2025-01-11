@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/judgement-app/static/js/main.a304785d.chunk.js",
-    "main.js.map": "/judgement-app/static/js/main.a304785d.chunk.js.map",
+    "main.js": "/judgement-app/static/js/main.02bea7b8.chunk.js",
+    "main.js.map": "/judgement-app/static/js/main.02bea7b8.chunk.js.map",
     "runtime-main.js": "/judgement-app/static/js/runtime-main.c9a1d715.js",
     "runtime-main.js.map": "/judgement-app/static/js/runtime-main.c9a1d715.js.map",
-    "static/js/2.3f53a261.chunk.js": "/judgement-app/static/js/2.3f53a261.chunk.js",
-    "static/js/2.3f53a261.chunk.js.map": "/judgement-app/static/js/2.3f53a261.chunk.js.map",
+    "static/js/2.3f5d58bd.chunk.js": "/judgement-app/static/js/2.3f5d58bd.chunk.js",
+    "static/js/2.3f5d58bd.chunk.js.map": "/judgement-app/static/js/2.3f5d58bd.chunk.js.map",
     "index.html": "/judgement-app/index.html",
-    "static/js/2.3f53a261.chunk.js.LICENSE.txt": "/judgement-app/static/js/2.3f53a261.chunk.js.LICENSE.txt",
+    "static/js/2.3f5d58bd.chunk.js.LICENSE.txt": "/judgement-app/static/js/2.3f5d58bd.chunk.js.LICENSE.txt",
     "static/media/Arushi.8c22d86b.jpg": "/judgement-app/static/media/Arushi.8c22d86b.jpg",
     "static/media/Billu.beeb4659.jpeg": "/judgement-app/static/media/Billu.beeb4659.jpeg",
     "static/media/Harshit.6d6ba388.jpg": "/judgement-app/static/media/Harshit.6d6ba388.jpg",
@@ -22,7 +22,7 @@
   },
   "entrypoints": [
     "static/js/runtime-main.c9a1d715.js",
-    "static/js/2.3f53a261.chunk.js",
-    "static/js/main.a304785d.chunk.js"
+    "static/js/2.3f5d58bd.chunk.js",
+    "static/js/main.02bea7b8.chunk.js"
   ]
 }

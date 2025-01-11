@@ -1,6 +1,7 @@
 import Arushi from "./images/Arushi.jpg";
 import Billu from "./images/Billu.jpeg";
 import Harshit from "./images/Harshit.jpg";
+import Himanshu from "./images/Himanshu.jpg";
 import Maadi from "./images/Maadi.jpg";
 import Parmar from "./images/Parmar.jpg";
 import Piddu from "./images/Piddu.jpg";
@@ -109,6 +110,16 @@ const players = [
     TotalScore: 0,
     Scores: [],
     ColorCode: "#839192",
+  },
+  {
+    ID: 13,
+    Name: "Himanshu",
+    IsMF: false,
+    Profile: Himanshu,
+    CurrentRoundScore: 0,
+    TotalScore: 0,
+    Scores: [],
+    ColorCode: "#a93226",
   },
 ];
 export default players;

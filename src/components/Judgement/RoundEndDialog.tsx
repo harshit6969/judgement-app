@@ -78,7 +78,7 @@ const RoundEndDialog = () => {
           <Button
             variant="contained"
             color="warning"
-            onClick={() => updateStatus(GameMode.IDLE)}
+            onClick={() => updateStatus(GameMode.ROUND_EXECUTING)}
           >
             Back
           </Button>

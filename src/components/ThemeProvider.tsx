@@ -1,22 +1,15 @@
-// src/components/ThemeProvider.tsx
-import { useEffect } from 'react';
+// ThemeProviderWrapper.tsx
+import { ThemeProvider } from '@mui/material/styles';
+import { getTheme } from '../utils/theme';
 import { useTheme } from '../store/appStore';
 
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const theme = useTheme();
-  
-  useEffect(() => {
-    // Apply theme to document
-    document.documentElement.classList.remove('light', 'dark');
-    
-    const effectiveTheme = theme === 'system'
-      ? window.matchMedia('(prefers-color-scheme: dark)').matches 
-        ? 'dark' 
-        : 'light'
-      : theme;
-    
-    document.documentElement.classList.add(effectiveTheme);
-  }, [theme]);
+export const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
+  const themeMode = useTheme(); // 'light' | 'dark' | 'system'
+  const theme = getTheme(themeMode);
 
-  return <>{children}</>;
+  return (
+    <ThemeProvider theme={theme}>
+      {children}
+    </ThemeProvider>
+  );
 };

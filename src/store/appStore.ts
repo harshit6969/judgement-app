@@ -5,7 +5,7 @@ import { AppStore } from '../utils/types';
 
 export const useAppStore = create<AppStore>((set) => ({
   notifications: [],
-  theme: 'system',
+  theme: 'light',
   setTheme: (theme) => set({ theme }),
   isLoading: false,
   addNotification: (notification) =>

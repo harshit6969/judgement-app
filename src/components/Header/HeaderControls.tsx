@@ -1,22 +1,43 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import useGameStore from "../../store/gameStore";
 import { useParams } from "react-router-dom";
-import { useNotify } from "../../store/appStore";
-import { PersonAdd, PlayArrow, Stop, Undo } from "@mui/icons-material";
+import { useAppStore, useNotify } from "../../store/appStore";
+import {
+  DarkMode,
+  LightMode,
+  PersonAdd,
+  PlayArrow,
+  Stop,
+  Undo,
+} from "@mui/icons-material";
 import { GameMode } from "../../utils/types";
 
 const HeaderControls = () => {
   const { id } = useParams();
   const currentRound = useGameStore.use.currentRound();
+  const { theme, setTheme } = useAppStore();
   const notify = useNotify();
 
   const handleAddPlayer = () => {
     notify.warning("TO DO");
   };
 
-  if (!id) {
-    return (
-      <Box sx={{ display: "flex", gap: 1 }}>
+  return (
+    <Box sx={{ display: "flex", gap: 1 }}>
+      <Tooltip
+        title={
+          theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+        }
+      >
+        <IconButton
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          color="inherit"
+          sx={{ ml: 1 }}
+        >
+          {theme === "light" ? <LightMode /> : <DarkMode />}
+        </IconButton>
+      </Tooltip>
+      {!id && (
         <Button
           color="warning"
           variant="contained"
@@ -25,11 +46,7 @@ const HeaderControls = () => {
         >
           Add Player
         </Button>
-      </Box>
-    );
-  }
-  return (
-    <Box sx={{ display: "flex", gap: 1 }}>
+      )}
       {currentRound > 1 && (
         <Button
           color="warning"

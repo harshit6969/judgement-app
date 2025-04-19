@@ -3,6 +3,7 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import SelectPlayers from "./pages/SelectPlayers";
 import Judgement from "./pages/Judgement";
+import { ThemeProviderWrapper } from "./components/ThemeProvider";
 
 const router = createHashRouter([
   {
@@ -23,7 +24,11 @@ const router = createHashRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ThemeProviderWrapper>
+      <RouterProvider router={router} />
+    </ThemeProviderWrapper>
+  );
 }
 
 export default App;

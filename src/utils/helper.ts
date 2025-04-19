@@ -23,6 +23,23 @@ export const rotatePlayers = (players: Player[]) => {
     return [...remainingPlayers, firstPlayer];
 };
 
-export const sortPlayersByScore = (players: Player[]) => {
-    return [...players].sort((p1, p2) => p2.TotalScore - p1.TotalScore);
+export const sortPlayersByScore = (players: Player[]): Player[] => {
+    return [...players].sort((p1, p2) => {
+        const score1 = p1.TotalScore ?? 0;
+        const score2 = p2.TotalScore ?? 0;
+        return score2 - score1;
+    });
 };
+
+export function getErrorMessage(error: unknown): string {
+    if (error instanceof Error) {
+      return error.message;
+    }
+    if (typeof error === 'string') {
+      return error;
+    }
+    if (error && typeof error === 'object' && 'message' in error) {
+      return String(error.message);
+    }
+    return 'An unknown error occurred';
+  }

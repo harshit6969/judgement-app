@@ -9,16 +9,21 @@ import {
 } from "@mui/material";
 import useGameStore from "../../store/gameStore";
 import { isStartValid } from "../../utils/validation";
+import { useNotify } from "../../store/appStore";
 
 const RoundStartDialog = () => {
   const players = useGameStore.use.players();
   const updateStatus = useGameStore.use.updateStatus();
   const updateCurrentScore = useGameStore.use.updateCurrentScore();
+  const notify = useNotify();
 
   const totalHands = Math.floor(52 / players.length);
 
   const handleSubmit = () => {
-    if (!isStartValid(players)) return;
+    if (!isStartValid(players)) {
+      notify.error('Bhosdike');
+      return;
+    }
     updateStatus(2);
   };
 

@@ -14,11 +14,13 @@ import useGameStore from "../../store/gameStore";
 import { isEndValid } from "../../utils/validation";
 import { useEffect, useState } from "react";
 import { CheckboxOptions } from "../../utils/types";
+import { useNotify } from "../../store/appStore";
 
 const RoundEndDialog = () => {
   const players = useGameStore.use.players();
   const updateStatus = useGameStore.use.updateStatus();
   const completeRound = useGameStore.use.completeRound();
+  const notify = useNotify();
 
 
   const [selected, setSelected] = useState<CheckboxOptions>(new Map());
@@ -32,7 +34,10 @@ const RoundEndDialog = () => {
   }, [players]);
 
   const handleSubmit = () => {
-    if (!isEndValid(selected)) return;
+    if (!isEndValid(selected)) {
+      notify.error('Bhosdike');
+      return;
+    }
     completeRound(selected);
   };
 

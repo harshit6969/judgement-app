@@ -109,6 +109,24 @@ const darkTheme = createTheme({
       color: '#E2E8F0',
     },
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        contained: {
+          // Ensure contrast in dark mode
+          backgroundColor: '#4299E1',
+          color: '#FFFFFF',
+          '&:hover': {
+            backgroundColor: '#3182CE',
+          },
+          '&.Mui-disabled': {
+            backgroundColor: '#2D3748',
+            color: '#718096',
+          }
+        }
+      }
+    }
+  }
 });
 
 export const getTheme = (mode: ThemeMode) => {

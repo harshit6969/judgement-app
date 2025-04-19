@@ -1,19 +1,16 @@
 import { Box, Chip } from "@mui/material";
 import useGameStore from "../../store/gameStore";
 import { useParams } from "react-router-dom";
-import { useMemo } from "react";
 
 const HeaderInfo = () => {
+  const { id } = useParams();
   const currentRound = useGameStore.use.currentRound();
   const players = useGameStore.use.players();
-  const { id } = useParams();
   if (!id) return;
-  const roundSummary = useMemo(() => {
-    const handsPlayed = players.reduce((acc, p) => acc + (p.CurrentRoundScore || 0), 0);
-    return handsPlayed > 0 
-      ? `Round: ${currentRound} | Hands: ${handsPlayed}`
-      : `Round: ${currentRound}`;
-  }, [currentRound, players]);
+  const handsPlayed = players.reduce((acc, p) => acc + (p.CurrentRoundScore || 0), 0);
+  const label = handsPlayed > 0 
+  ? `Round: ${currentRound} | Hands: ${handsPlayed}`
+  : `Round: ${currentRound}`;
   
   return (
     <Box
@@ -26,7 +23,7 @@ const HeaderInfo = () => {
       }}
     >
       <Chip
-        label={roundSummary}
+        label={label}
         color="secondary"
         sx={{ fontWeight: "bold", fontSize: "1rem" }}
       />

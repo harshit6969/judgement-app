@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Badge,
   Grid,
   ListItem,
   ListItemAvatar,
@@ -13,6 +14,7 @@ import { sortPlayersByScore } from "../../utils/helper";
 const Leaderboard = () => {
   const players = useGameStore.use.players();
   const currentRound = useGameStore.use.currentRound();
+  const status = useGameStore.use.status();
 
   const [leaders, setLeaders] = useState<Player[]>([]);
 
@@ -22,7 +24,7 @@ const Leaderboard = () => {
 
   return (
     <Grid
-    size={{ xs: 12, md: 4 }}
+      size={{ xs: 12, md: 4 }}
       container
       direction="column"
       sx={{
@@ -42,7 +44,19 @@ const Leaderboard = () => {
           }
         >
           <ListItemAvatar>
-            <Avatar src={Player.Profile} />
+            <Badge
+              overlap="circular"
+              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+              badgeContent={
+                status === 2 && (
+                  <Avatar sx={{ width: 20, height: 20, backgroundColor: Player.ColorCode }}>
+                    {Player.CurrentRoundScore}
+                  </Avatar>
+                )
+              }
+            >
+              <Avatar src={Player.Profile} />
+            </Badge>
           </ListItemAvatar>
           <ListItemText primary={Player.Name} />
         </ListItem>

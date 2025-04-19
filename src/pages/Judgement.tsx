@@ -32,7 +32,7 @@ export const Judgement = () => {
   }
 
   return (
-    <Grid container spacing={2} sx={{height: '80%'}}>
+    <Grid container spacing={2}>
       <Graph />
       <Leaderboard />
       <RoundDialog />

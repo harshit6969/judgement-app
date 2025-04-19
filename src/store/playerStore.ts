@@ -49,8 +49,8 @@ const PlayerStore = create<PlayerStore>((set, get) => ({
             ...GAME_INITIAL_STATE,
             players: players.map(p => ({
                 ID: p.ID,
-                CurrentRoundScore: undefined, 
-                TotalScore: 0, 
+                CurrentRoundScore: undefined,
+                TotalScore: 0,
                 Scores: []
             }))
         }
@@ -59,7 +59,11 @@ const PlayerStore = create<PlayerStore>((set, get) => ({
     },
     loadPlayers: async () => {
         const players = await playerDB.initializeDefaultPlayers();
-        set({ available: players });
+        set({
+            available: players,
+            selected: [],
+            checked: []
+        });
     },
 }));
 

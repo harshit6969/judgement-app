@@ -37,16 +37,6 @@ const HeaderControls = () => {
           {theme === "light" ? <LightMode /> : <DarkMode />}
         </IconButton>
       </Tooltip>
-      {!id && (
-        <Button
-          color="warning"
-          variant="contained"
-          onClick={handleAddPlayer}
-          startIcon={<PersonAdd />}
-        >
-          Add Player
-        </Button>
-      )}
       {currentRound > 1 && (
         <Button
           color="warning"
@@ -57,8 +47,18 @@ const HeaderControls = () => {
           Undo
         </Button>
       )}
-
-      <HeaderControlBtn />
+      {id ? (
+        <HeaderControlBtn />
+      ) : (
+        <Button
+          color="warning"
+          variant="contained"
+          onClick={handleAddPlayer}
+          startIcon={<PersonAdd />}
+        >
+          Add Player
+        </Button>
+      )}
     </Box>
   );
 };

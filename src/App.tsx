@@ -1,10 +1,10 @@
 import "./App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import SelectPlayers from "./pages/SelectPlayers";
 import Judgement from "./pages/Judgement";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Home />,
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
         element: <Judgement />,
       },
     ],
-    errorElement: <h1>404</h1>,
+    errorElement: <Home />,
   },
 ]);
 

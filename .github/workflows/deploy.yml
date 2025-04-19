@@ -1,45 +1,31 @@
-name: Deploy React App to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - master # Trigger deployment on push to the master branch
+    branches: [ master ]
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      # Step 2: Set up Node.js environment
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: '18' # Use Node.js version 18 LTS
-
-      # Step 3: Cache npm dependencies
-      - name: Cache NPM dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      # Step 4: Install dependencies with npm and handle peer-deps issues
+          node-version: '20'
+          
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
-
-      # Step 5: Build the React app
-      - name: Build the React app
-        run: CI=false npm run build
-
-      # Step 6: Deploy to GitHub Pages
+        run: npm ci
+        
+      - name: Build project
+        run: npm run build
+        
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # Use the GitHub token for authentication
-          publish_dir: ./build # Directory containing the build output
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: ./judgement-app
+          enable_jekyll: false
+          keep_files: true

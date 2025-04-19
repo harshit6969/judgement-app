@@ -18,11 +18,13 @@ export const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
     return store
 }
 
-export const rotatePlayers = (players: Player[]) => {
-    const [firstPlayer, ...remainingPlayers] = players;
-    return [...remainingPlayers, firstPlayer];
-};
+export const rotatePlayers = (players: Player[], direction: 1 | -1 = 1) => {
+    if (players.length <= 1) return players;
 
+    return direction === 1
+        ? [...players.slice(1), players[0]]  // Forward rotation (default)
+        : [players[players.length - 1], ...players.slice(0, -1)];  // Reverse rotation
+};
 export const sortPlayersByScore = (players: Player[]): Player[] => {
     return [...players].sort((p1, p2) => {
         const score1 = p1.TotalScore ?? 0;
@@ -33,13 +35,13 @@ export const sortPlayersByScore = (players: Player[]): Player[] => {
 
 export function getErrorMessage(error: unknown): string {
     if (error instanceof Error) {
-      return error.message;
+        return error.message;
     }
     if (typeof error === 'string') {
-      return error;
+        return error;
     }
     if (error && typeof error === 'object' && 'message' in error) {
-      return String(error.message);
+        return String(error.message);
     }
     return 'An unknown error occurred';
-  }
+}

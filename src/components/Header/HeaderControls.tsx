@@ -15,6 +15,8 @@ import { GameMode } from "../../utils/types";
 const HeaderControls = () => {
   const { id } = useParams();
   const currentRound = useGameStore.use.currentRound();
+  const status = useGameStore.use.status();
+  const undoRound = useGameStore.use.undoRound();
   const { theme, setTheme } = useAppStore();
   const notify = useNotify();
 
@@ -37,11 +39,11 @@ const HeaderControls = () => {
           {theme === "light" ? <DarkMode /> : <LightMode />}
         </IconButton>
       </Tooltip>
-      {currentRound > 1 && (
+      {currentRound > 1 && [GameMode.ROUND_EXECUTING, GameMode.IDLE].includes(status) && (
         <Button
           color="warning"
           variant="contained"
-          onClick={handleAddPlayer}
+          onClick={() => undoRound()}
           startIcon={<Undo />}
         >
           Undo

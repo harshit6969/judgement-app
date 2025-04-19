@@ -9,6 +9,7 @@ const RoundDialog = () => {
     case GameMode.ROUND_START:
       return <RoundStartDialog />;
     case GameMode.ROUND_END:
+    case GameMode.UNDO:
       return <RoundEndDialog />;
     default:
       return null;

@@ -10,6 +10,8 @@ import {
 import useGameStore from "../../store/gameStore";
 import { isStartValid } from "../../utils/validation";
 import { useNotify } from "../../store/appStore";
+import { GameMode } from "../../utils/types";
+import { useEffect, useState } from "react";
 
 const RoundStartDialog = () => {
   const players = useGameStore.use.players();
@@ -19,30 +21,34 @@ const RoundStartDialog = () => {
 
   const totalHands = Math.floor(52 / players.length);
 
+  const [isEdit, setIsEdit] = useState(false);
+
+  useEffect(() => {
+    const isEditMode = players.every(
+      (player) => player.CurrentRoundScore !== undefined
+    );
+    setIsEdit(isEditMode);
+  }, []);
+
   const handleSubmit = () => {
     if (!isStartValid(players)) {
-      notify.error('Bhosdike');
+      notify.error("Bhosdike");
       return;
     }
-    updateStatus(2);
+    updateStatus(GameMode.ROUND_EXECUTING);
   };
 
   return (
     <Dialog fullWidth maxWidth="lg" disableEscapeKeyDown open>
-      <DialogContent sx={{ overflowX: 'hidden' }}>
-        <Grid
-          container
-          direction="column"
-          spacing={5}
-          paddingTop={2}
-        >
+      <DialogContent sx={{ overflowX: "hidden" }}>
+        <Grid container direction="column" spacing={5} paddingTop={2}>
           {players.map((player, index) => (
             <Grid
               size={12}
               key={player.ID}
-              sx={{ 
+              sx={{
                 color: player.ColorCode,
-                display: 'flex',
+                display: "flex",
               }}
             >
               <Typography variant="subtitle1" sx={{ minWidth: 120 }}>
@@ -50,7 +56,9 @@ const RoundStartDialog = () => {
               </Typography>
               <Slider
                 value={player.CurrentRoundScore}
-                onChangeCommitted={(_, value) => updateCurrentScore(index, value as number)}
+                onChangeCommitted={(_, value) =>
+                  updateCurrentScore(index, value as number)
+                }
                 min={0}
                 max={totalHands}
                 step={1}
@@ -58,11 +66,13 @@ const RoundStartDialog = () => {
                   value: i,
                   label: i.toString(),
                 }))}
-                valueLabelDisplay={player.CurrentRoundScore !== undefined ? "on" : "off"}
+                valueLabelDisplay={
+                  player.CurrentRoundScore !== undefined ? "on" : "off"
+                }
                 sx={{
                   flex: 1,
-                  color: 'inherit',
-                  maxWidth: 'calc(100% - 140px)'
+                  color: "inherit",
+                  maxWidth: "calc(100% - 140px)",
                 }}
               />
             </Grid>
@@ -73,9 +83,15 @@ const RoundStartDialog = () => {
         <Button variant="contained" color="primary" onClick={handleSubmit}>
           Submit
         </Button>
-        <Button variant="contained" color="warning" onClick={() => updateStatus(0)}>
-          Back
-        </Button>
+        {!isEdit && (
+          <Button
+            variant="contained"
+            color="warning"
+            onClick={() => updateStatus(GameMode.IDLE)}
+          >
+            Back
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

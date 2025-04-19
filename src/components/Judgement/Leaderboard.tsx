@@ -48,7 +48,7 @@ const Leaderboard = () => {
               overlap="circular"
               anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
               badgeContent={
-                [GameMode.ROUND_EXECUTING, GameMode.ROUND_END].includes(status) && (
+                [GameMode.ROUND_EXECUTING, GameMode.ROUND_END, GameMode.UNDO].includes(status) && (
                   <Avatar sx={{ width: 20, height: 20, backgroundColor: Player.ColorCode }}>
                     {Player.CurrentRoundScore}
                   </Avatar>

@@ -4,7 +4,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   FormControl,
   FormControlLabel,
   FormGroup,
@@ -13,15 +12,15 @@ import {
 import useGameStore from "../../store/gameStore";
 import { isEndValid } from "../../utils/validation";
 import { useEffect, useState } from "react";
-import { CheckboxOptions } from "../../utils/types";
+import { CheckboxOptions, GameMode } from "../../utils/types";
 import { useNotify } from "../../store/appStore";
 
 const RoundEndDialog = () => {
   const players = useGameStore.use.players();
+  const status = useGameStore.use.status();
   const updateStatus = useGameStore.use.updateStatus();
   const completeRound = useGameStore.use.completeRound();
   const notify = useNotify();
-
 
   const [selected, setSelected] = useState<CheckboxOptions>(new Map());
 
@@ -35,7 +34,7 @@ const RoundEndDialog = () => {
 
   const handleSubmit = () => {
     if (!isEndValid(selected)) {
-      notify.error('Bhosdike');
+      notify.error("Bhosdike");
       return;
     }
     completeRound(selected);
@@ -51,7 +50,6 @@ const RoundEndDialog = () => {
 
   return (
     <Dialog disableEscapeKeyDown open={true}>
-      <DialogTitle>Results: </DialogTitle>
       <DialogContent>
         <FormControl required component="fieldset">
           <FormLabel component="legend">Unselect failures</FormLabel>
@@ -76,13 +74,15 @@ const RoundEndDialog = () => {
         <Button variant="contained" color="primary" onClick={handleSubmit}>
           Submit
         </Button>
-        <Button
-          variant="contained"
-          color="warning"
-          onClick={() => updateStatus(2)}
-        >
-          Back
-        </Button>
+        {status !== GameMode.UNDO && (
+          <Button
+            variant="contained"
+            color="warning"
+            onClick={() => updateStatus(GameMode.IDLE)}
+          >
+            Back
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

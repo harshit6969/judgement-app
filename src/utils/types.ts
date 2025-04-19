@@ -7,6 +7,7 @@ export type Player = {
   Profile?: string;
   ColorCode?: string;
   CurrentRoundScore?: number | undefined;
+  PrevRoundScore?: number;
   TotalScore?: number;
   Scores?: number[];
 };
@@ -21,7 +22,8 @@ export enum GameMode {
   IDLE = 0,
   ROUND_START = 1,
   ROUND_EXECUTING = 2,
-  ROUND_END = 3
+  ROUND_END = 3,
+  UNDO = 4
 }
 
 export interface PlayerListItemProps {
@@ -49,6 +51,7 @@ export type GameStore = GameState & {
   updateStatus: (status: GameState['status']) => Promise<void>;
   updateCurrentScore: (index: number, value: number) => void;
   completeRound: (opts: CheckboxOptions) => Promise<void>;
+  undoRound: () => Promise<void>;
 };
 
 

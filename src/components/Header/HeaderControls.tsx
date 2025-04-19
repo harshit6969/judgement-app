@@ -34,7 +34,7 @@ const HeaderControls = () => {
           color="inherit"
           sx={{ ml: 1 }}
         >
-          {theme === "light" ? <LightMode /> : <DarkMode />}
+          {theme === "light" ? <DarkMode /> : <LightMode />}
         </IconButton>
       </Tooltip>
       {currentRound > 1 && (

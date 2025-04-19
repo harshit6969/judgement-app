@@ -1,14 +1,13 @@
-import Arushi from "./images/Arushi.jpg";
-import Billu from "./images/Billu.jpeg";
-import Harshit from "./images/Harshit.jpg";
-import Himanshu from "./images/Himanshu.jpg";
-import Maadi from "./images/Maadi.jpg";
-import Parmar from "./images/Parmar.jpg";
-import Piddu from "./images/Piddu.jpg";
-import Santru from "./images/Santru.JPG";
-import Shanky from "./images/Shanky.jpg";
-import Shivam from "./images/Shivam.jpeg";
-import Vikas from "./images/Vikas.jpg";
+import Arushi from "../assets/Arushi.jpg";
+import Billu from "../assets/Billu.jpeg";
+import Harshit from "../assets/Harshit.jpg";
+import Himanshu from "../assets/Himanshu.jpg";
+import Maadi from "../assets/Maadi.jpg";
+import Parmar from "../assets/Parmar.jpg";
+import Piddu from "../assets/Piddu.jpg";
+import Shanky from "../assets/Shanky.jpg";
+import Shivam from "../assets/Shivam.jpeg";
+import Vikas from "../assets/Vikas.jpg";
 
 const players = [
   {
@@ -82,16 +81,6 @@ const players = [
     ColorCode: "#af7ac5",
   },
   {
-    ID: 10,
-    Name: "Santru",
-    IsMF: false,
-    Profile: Santru,
-    CurrentRoundScore: 0,
-    TotalScore: 0,
-    Scores: [],
-    ColorCode: "#f39c12",
-  },
-  {
     ID: 11,
     Name: "Lawrence",
     IsMF: false,
@@ -122,4 +111,5 @@ const players = [
     ColorCode: "#a93226",
   },
 ];
+
 export default players;

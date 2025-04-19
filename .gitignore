@@ -62,7 +62,3 @@ coverage/
 
 # Windows system files
 Thumbs.db
-
-
-package-lock.json
-yarn.lock

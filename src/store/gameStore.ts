@@ -1,6 +1,6 @@
 // src/store/gameStore.ts
 import { create } from 'zustand';
-import { CheckboxOptions, GameStore } from '../utils/types';
+import { CheckboxOptions, GameMode, GameStore } from '../utils/types';
 import { gameDB } from '../utils/db';
 import { createSelectors, rotatePlayers } from '../utils/helper';
 import { GAME_INITIAL_STATE } from '../utils/constants';
@@ -24,7 +24,7 @@ const useGameStore = create<GameStore>((set, get) => ({
   toggleRound: async () => {
     const state = get();
     let newState = {};
-    if (state.status === 0) {
+    if (state.status === GameMode.IDLE) {
       newState = {
         status: state.status + 1,
         players: state.players.map((p) => ({ ...p, CurrentRoundScore: undefined })),
@@ -78,7 +78,7 @@ const useGameStore = create<GameStore>((set, get) => ({
   
     const newState = {
       ...state,
-      status: 0, // Return to idle state
+      status: GameMode.IDLE, // Return to idle state
       players: rotatePlayers(updatedPlayers),
       currentRound: state.currentRound + 1,
     };

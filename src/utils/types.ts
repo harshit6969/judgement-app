@@ -17,6 +17,13 @@ export type PlayerState = {
   checked: Player[];
 };
 
+export enum GameMode {
+  IDLE = 0,
+  ROUND_START = 1,
+  ROUND_EXECUTING = 2,
+  ROUND_END = 3
+}
+
 export interface PlayerListItemProps {
   player: Player;
   checked: boolean;
@@ -31,7 +38,7 @@ export interface GameState {
   id: string;
   players: Player[];
   currentRound: number;
-  status: number;
+  status: GameMode;
   createdAt: number;
   loading: boolean;
 }

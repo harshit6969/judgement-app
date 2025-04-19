@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import useGameStore from "../../store/gameStore";
 import { useEffect, useState } from "react";
-import { Player } from "../../utils/types";
+import { GameMode, Player } from "../../utils/types";
 import { sortPlayersByScore } from "../../utils/helper";
 
 const Leaderboard = () => {
@@ -48,7 +48,7 @@ const Leaderboard = () => {
               overlap="circular"
               anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
               badgeContent={
-                status === 2 && (
+                [GameMode.ROUND_EXECUTING, GameMode.ROUND_END].includes(status) && (
                   <Avatar sx={{ width: 20, height: 20, backgroundColor: Player.ColorCode }}>
                     {Player.CurrentRoundScore}
                   </Avatar>

@@ -1,11 +1,11 @@
-import Arushi from "../assets/Arushi.jpg";
-import Harshit from "../assets/Harshit.jpg";
-import Himanshu from "../assets/Himanshu.jpg";
-import Maadi from "../assets/Maadi.jpg";
-import Parmar from "../assets/Parmar.jpg";
-import Shanky from "../assets/Shanky.jpg";
-import Shivam from "../assets/Shivam.jpeg";
-import Vikas from "../assets/Vikas.jpg";
+import Arushi from "../../public/assets/Arushi.jpg";
+import Harshit from "../../public/assets/Harshit.jpg";
+import Himanshu from "../../public/assets/Himanshu.jpg";
+import Maadi from "../../public/assets/Maadi.jpg";
+import Parmar from "../../public/assets/Parmar.jpg";
+import Shanky from "../../public/assets/Shanky.jpg";
+import Shivam from "../../public/assets/Shivam.jpeg";
+import Vikas from "../../public/assets/Vikas.jpg";
 
 const players = [
   {

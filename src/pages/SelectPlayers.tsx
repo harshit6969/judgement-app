@@ -19,7 +19,7 @@ export const SelectPlayers = () => {
 
   const handleStartGame = async () => {
     const gameId = await initGame(selected);
-    navigate(`/judgement-app/${gameId}`);
+    navigate(`/${gameId}`);
   };
 
   return (

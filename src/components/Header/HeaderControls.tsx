@@ -3,6 +3,7 @@ import useGameStore from "../../store/gameStore";
 import { useParams } from "react-router-dom";
 import { useNotify } from "../../store/appStore";
 import { PersonAdd, PlayArrow, Stop, Undo } from "@mui/icons-material";
+import { GameMode } from "../../utils/types";
 
 const HeaderControls = () => {
   const { id } = useParams();
@@ -48,10 +49,10 @@ const HeaderControls = () => {
 export default HeaderControls;
 
 const HeaderControlBtn = () => {
-  const gameStatus = useGameStore.use.status();
+  const status = useGameStore.use.status();
   const toggleRound = useGameStore.use.toggleRound();
-  switch (gameStatus) {
-    case 0:
+  switch (status) {
+    case GameMode.IDLE:
       return (
         <Button
           color="success"
@@ -62,7 +63,7 @@ const HeaderControlBtn = () => {
           Start
         </Button>
       );
-    case 2:
+    case GameMode.ROUND_EXECUTING:
       return (
         <Button
           color="error"

@@ -14,7 +14,7 @@ const router = createHashRouter([
         element: <SelectPlayers />,
       },
       {
-        path: "/judgement-app/:id",
+        path: "/:id",
         element: <Judgement />,
       },
     ],

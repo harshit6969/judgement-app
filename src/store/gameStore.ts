@@ -82,8 +82,8 @@ const useGameStore = create<GameStore>((set, get) => ({
       players: rotatePlayers(updatedPlayers),
       currentRound: state.currentRound + 1,
     };
-    set(newState);
     await gameDB.saveGame(newState);
+    set(newState);
   }
 }));
 

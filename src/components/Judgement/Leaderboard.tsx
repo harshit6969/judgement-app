@@ -20,7 +20,7 @@ const Leaderboard = () => {
 
   useEffect(() => {
     setLeaders(sortPlayersByScore(players));
-  }, [currentRound]);
+  }, [players, currentRound]);
 
   return (
     <Grid

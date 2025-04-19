@@ -1,6 +1,7 @@
 {
   "name": "judgement-app",
   "private": true,
+  "homepage": "https://harshit6969.github.io/judgement-app",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

@@ -44,8 +44,6 @@ export class GameDB {
                 Scores: gamePlayer.Scores
             };
         });
-        console.log(mergedPlayers);
-
         return {
             ...game,
             players: mergedPlayers,

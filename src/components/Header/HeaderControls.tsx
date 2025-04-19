@@ -10,7 +10,7 @@ const HeaderControls = () => {
   const notify = useNotify();
 
   const handleAddPlayer = () => {
-    notify.info("coming soon!");
+    notify.warning("TO DO");
   };
 
   if (!id) {

@@ -22,7 +22,7 @@ const Leaderboard = () => {
 
   return (
     <Grid
-      size={4}
+    size={{ xs: 12, md: 4 }}
       container
       direction="column"
       sx={{

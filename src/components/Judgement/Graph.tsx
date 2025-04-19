@@ -40,7 +40,7 @@ export default function Graph() {
   );
 
   return (
-    <Grid size={8}>
+    <Grid size={{ xs: 12, md: 8 }}>
       <LineChart
         xAxis={[
           {

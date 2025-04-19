@@ -9,15 +9,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensures full git history
+          
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm ci
-      - run: npm run build
+          cache: 'npm'  # Proper caching
+          
+      - name: Clean install
+        run: |
+          npm ci
+          npm cache clean --force
+          
+      - name: Build
+        run: |
+          rm -rf dist .next  # Clean previous builds
+          npm run build
+          
+      - name: Verify build
+        run: |
+          ls -R dist
+          echo "Build completed at: $(date)"
+          
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          destination_dir: judgement-app
+          # Remove destination_dir and keep_files
           enable_jekyll: false
-          keep_files: true
+          force_orphan: true  # Ensures clean deployment

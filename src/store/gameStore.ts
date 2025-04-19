@@ -35,7 +35,6 @@ const useGameStore = create<GameStore>((set, get) => ({
       }
     }
     set(newState);
-    // await saveGame({ ...state, ...newState });
   },
 
   resetGame: async () => {
@@ -47,6 +46,7 @@ const useGameStore = create<GameStore>((set, get) => ({
     const state = get();
     const newState = { ...state, status };
     set(newState);
+    await gameDB.saveGame(newState);
   },
 
   updateCurrentScore: (index: number, value: number) => {

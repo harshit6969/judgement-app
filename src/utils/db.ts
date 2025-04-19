@@ -1,78 +1,119 @@
 // src/services/GameDB.ts
 
-import { GameState } from "./types";
+import { db } from "../services/player";
+import players from "./players";
+import { GameState, Player } from "./types";
 
 export class GameDB {
-    private static DB_NAME = 'JudgementGameDB';
-    private static STORE_NAME = 'games';
-    private static DB_VERSION = 1;
-
-    private async getDB(): Promise<IDBDatabase> {
-        return new Promise((resolve, reject) => {
-            const request = indexedDB.open(GameDB.DB_NAME, GameDB.DB_VERSION);
-
-            request.onerror = () => reject(request.error);
-            request.onsuccess = () => resolve(request.result);
-            request.onupgradeneeded = (event) => {
-                const db = (event.target as IDBOpenDBRequest).result;
-                if (!db.objectStoreNames.contains(GameDB.STORE_NAME)) {
-                    const store = db.createObjectStore(GameDB.STORE_NAME, { keyPath: 'id' });
-                    store.createIndex('by_createdAt', 'createdAt');
-                }
-            };
-        });
-    }
-
-    public async saveGame(gameData: GameState): Promise<void> {
-        const db = await this.getDB();
-        return new Promise((resolve, reject) => {
-            const tx = db.transaction(GameDB.STORE_NAME, 'readwrite');
-            const store = tx.objectStore(GameDB.STORE_NAME);
-
-            // Create a clean object without methods
-            const cleanGameData = this.sanitizeGameData(gameData);
-
-            const request = store.put(cleanGameData);
-
-            request.onsuccess = () => resolve();
-            request.onerror = () => reject(request.error);
-            tx.onerror = () => reject(tx.error);
-        });
-    }
-
-    public async loadGame(gameId: string): Promise<GameState | null> {
-        const db = await this.getDB();
-        return new Promise((resolve, reject) => {
-            const tx = db.transaction(GameDB.STORE_NAME, 'readonly');
-            const store = tx.objectStore(GameDB.STORE_NAME);
-
-            const request = store.get(gameId);
-
-            request.onsuccess = () => resolve(request.result || null);
-            request.onerror = () => reject(request.error);
-        });
-    }
-
-    private sanitizeGameData(gameData: GameState): GameState {
-        // Remove any non-serializable properties (functions, etc.)
-        return {
+    async saveGame(gameData: GameState): Promise<void> {
+        // Convert to normalized structure
+        const game: GameState = {
             id: gameData.id,
-            players: gameData.players.map(player => ({
-                ID: player.ID,
-                Name: player.Name,
-                IsMF: player.IsMF,
-                Profile: player.Profile,
-                ColorCode: player.ColorCode,
-                CurrentRoundScore: player.CurrentRoundScore,
-                TotalScore: player.TotalScore,
-                Scores: player.Scores ? [...player.Scores] : undefined
+            players: gameData.players.map(p => ({
+                ...p,
+                ID: p.ID,
+                CurrentRoundScore: p.CurrentRoundScore || 0,
+                TotalScore: p.TotalScore || 0,
+                Scores: p.Scores || []
             })),
             currentRound: gameData.currentRound,
             status: gameData.status,
             createdAt: gameData.createdAt,
-            loading: false // Ensure we never store loading state
+            loading: false,
+        };
+        await db.games.put(game);
+    }
+
+    async loadGame(gameId: string): Promise<GameState | null> {
+        const game = await db.games.get(gameId);
+        if (!game) return null;
+
+        // Get full player details
+        const playerIds = game.players.map(p => p.ID);
+        const players = await db.players
+            .where('ID')
+            .anyOf(playerIds)
+            .toArray();
+
+        // Merge static and dynamic player data
+        const mergedPlayers = game.players.map(gamePlayer => {
+            const player = players.find(p => p.ID === gamePlayer.ID)!;
+            return {
+                ...player,
+                CurrentRoundScore: gamePlayer.CurrentRoundScore,
+                TotalScore: gamePlayer.TotalScore,
+                Scores: gamePlayer.Scores
+            };
+        });
+
+        return {
+            ...game,
+            players: mergedPlayers,
+            loading: false
         };
     }
 }
 
 export const gameDB = new GameDB();
+
+
+export class PlayerDB {
+    /**
+     * Get all players from the database
+     */
+    async getAllPlayers(): Promise<Player[]> {
+        return await db.players.toArray();
+    }
+
+    /**
+     * Get a specific player by ID
+     */
+    async getPlayer(id: number): Promise<Player | undefined> {
+        return await db.players.get(id);
+    }
+
+    /**
+     * Get multiple players by their IDs
+     */
+    async getPlayersByIds(ids: number[]): Promise<Player[]> {
+        return await db.players.where('ID').anyOf(ids).toArray();
+    }
+
+    /**
+     * Add new players to the database
+     */
+    async addPlayers(players: Omit<Player, 'ID'>[]): Promise<number> {
+        return await db.players.bulkAdd(players as Player[]);
+    }
+
+    /**
+     * Update existing players
+     */
+    async updatePlayers(players: Player[]): Promise<void> {
+        await db.players.bulkPut(players);
+    }
+
+    /**
+     * Initialize the players table with default data
+     */
+    async initializeDefaultPlayers(): Promise<Player[]> {
+        const count = await db.players.count();
+        if (count === 0) {
+            await db.players.bulkAdd(players);
+            return players;
+        }
+        return await this.getAllPlayers();
+    }
+
+    /**
+     * Search players by name (case insensitive)
+     */
+    async searchPlayers(name: string): Promise<Player[]> {
+        const allPlayers = await this.getAllPlayers();
+        return allPlayers.filter(player => 
+            player.Name.toLowerCase().includes(name.toLowerCase())
+        );
+    }
+}
+
+export const playerDB = new PlayerDB();

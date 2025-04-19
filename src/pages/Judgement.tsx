@@ -8,7 +8,6 @@ import Leaderboard from "../components/Judgement/Leaderboard";
 
 export const Judgement = () => {
   const { id } = useParams();
-  console.log(useGameStore);
   const loading = useGameStore.use.loading();
   const loadGameState = useGameStore.use.loadGameState();
 

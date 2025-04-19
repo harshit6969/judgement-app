@@ -1,7 +1,7 @@
 // src/store/gameStore.ts
 import { create } from 'zustand';
 import { GameState, Player, PlayerState } from '../utils/types';
-import { gameDB } from '../utils/db';
+import { gameDB, playerDB } from '../utils/db';
 import { createSelectors } from '../utils/helper';
 import { GAME_INITIAL_STATE, PLAYER_INITIAL_STATE } from '../utils/constants';
 
@@ -10,6 +10,7 @@ type PlayerStore = PlayerState & {
     toggleAllPlayers: (players: Player[]) => void;
     transferPlayers: (direction: 'left' | 'right') => void;
     initGame: (players: Player[]) => Promise<string>;
+    loadPlayers: () => void;
 }
 
 const PlayerStore = create<PlayerStore>((set, get) => ({
@@ -28,7 +29,6 @@ const PlayerStore = create<PlayerStore>((set, get) => ({
         set({ checked: checked });
     },
     transferPlayers: (direction) => {
-        console.log(direction);
         const { available, selected, checked } = get();
         const isRight = direction === 'right';
         const playersToTransfer = isRight
@@ -47,10 +47,19 @@ const PlayerStore = create<PlayerStore>((set, get) => ({
     initGame: async (players) => {
         const record: GameState = {
             ...GAME_INITIAL_STATE,
-            players,
+            players: players.map(p => ({
+                ...p,
+                CurrentRoundScore: 0, 
+                TotalScore: 0, 
+                Scores: []
+            }))
         }
         await gameDB.saveGame(record);
         return record.id;
+    },
+    loadPlayers: async () => {
+        const players = await playerDB.initializeDefaultPlayers();
+        set({ available: players });
     },
 }));
 

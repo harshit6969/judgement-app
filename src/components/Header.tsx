@@ -15,7 +15,6 @@ export const Header = () => {
   const gameStatus = useGameStore.use.status();
   const toggleRound = useGameStore.use.toggleRound();
 
-  console.log(id, gameStatus);
   return (
     <AppBar position="static">
       <Toolbar>

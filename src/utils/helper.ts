@@ -5,7 +5,7 @@ type WithSelectors<S> = S extends { getState: () => infer T }
     ? S & { use: { [K in keyof T]: () => T[K] } }
     : never
 
-const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
+export const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
     _store: S,
 ) => {
     const store = _store as WithSelectors<typeof _store>
@@ -18,24 +18,11 @@ const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
     return store
 }
 
-
-function setValue(key: string, value: unknown) {
-    console.log(value);
-    localStorage.setItem(key, JSON.stringify(value));
-}
-
-function getValue(key: string) {
-    return JSON.parse(localStorage.getItem(key) ?? "")
-}
-
-
-const rotatePlayers = (players: Player[]) => {
+export const rotatePlayers = (players: Player[]) => {
     const [firstPlayer, ...remainingPlayers] = players;
     return [...remainingPlayers, firstPlayer];
 };
 
-const sortPlayersByScore = (players: Player[]) => {
+export const sortPlayersByScore = (players: Player[]) => {
     return [...players].sort((p1, p2) => p2.TotalScore - p1.TotalScore);
 };
-
-export { setValue, getValue, createSelectors, rotatePlayers, sortPlayersByScore };

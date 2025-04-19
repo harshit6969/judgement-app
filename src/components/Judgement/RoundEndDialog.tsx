@@ -49,7 +49,7 @@ const RoundEndDialog = () => {
   };
 
   return (
-    <Dialog disableEscapeKeyDown open={true}>
+    <Dialog fullWidth maxWidth="xs" disableEscapeKeyDown open>
       <DialogContent>
         <FormControl required component="fieldset">
           <FormLabel component="legend">Unselect failures</FormLabel>

@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogTitle,
   Grid,
   Slider,
   Typography,
@@ -15,11 +16,16 @@ import { useEffect, useState } from "react";
 
 const RoundStartDialog = () => {
   const players = useGameStore.use.players();
+  const currentRound = useGameStore.use.currentRound();
   const updateStatus = useGameStore.use.updateStatus();
   const updateCurrentScore = useGameStore.use.updateCurrentScore();
   const notify = useNotify();
 
   const totalHands = Math.floor(52 / players.length);
+  const handsPlayed = players.reduce(
+    (acc, p) => acc + (p.CurrentRoundScore || 0),
+    0
+  );
 
   const [isEdit, setIsEdit] = useState(false);
 
@@ -39,9 +45,10 @@ const RoundStartDialog = () => {
   };
 
   return (
-    <Dialog fullWidth maxWidth="lg" disableEscapeKeyDown open>
-      <DialogContent sx={{ overflowX: "hidden" }}>
-        <Grid container direction="column" spacing={5} paddingTop={2}>
+    <Dialog fullWidth maxWidth="xl" disableEscapeKeyDown open scroll={"paper"}>
+      <DialogTitle>{`Round: ${currentRound} | Hands: ${handsPlayed}`}</DialogTitle>
+      <DialogContent dividers={true}>
+        <Grid container direction="column" spacing={2} paddingTop={2}>
           {players.map((player, index) => (
             <Grid
               size={12}

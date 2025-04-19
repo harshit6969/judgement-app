@@ -10,7 +10,7 @@ const router = createHashRouter([
     element: <Home />,
     children: [
       {
-        path: "/",
+        index: true,
         element: <SelectPlayers />,
       },
       {
@@ -18,7 +18,7 @@ const router = createHashRouter([
         element: <Judgement />,
       },
     ],
-    errorElement: <Home />,
+    errorElement: <div>Error Page</div>,
   },
 ]);
 

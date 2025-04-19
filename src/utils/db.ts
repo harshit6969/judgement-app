@@ -10,11 +10,10 @@ export class GameDB {
         const game: GameState = {
             id: gameData.id,
             players: gameData.players.map(p => ({
-                ...p,
                 ID: p.ID,
-                CurrentRoundScore: p.CurrentRoundScore || 0,
-                TotalScore: p.TotalScore || 0,
-                Scores: p.Scores || []
+                CurrentRoundScore: p.CurrentRoundScore,
+                TotalScore: p.TotalScore,
+                Scores: p.Scores
             })),
             currentRound: gameData.currentRound,
             status: gameData.status,
@@ -103,16 +102,6 @@ export class PlayerDB {
             return players;
         }
         return await this.getAllPlayers();
-    }
-
-    /**
-     * Search players by name (case insensitive)
-     */
-    async searchPlayers(name: string): Promise<Player[]> {
-        const allPlayers = await this.getAllPlayers();
-        return allPlayers.filter(player => 
-            player.Name.toLowerCase().includes(name.toLowerCase())
-        );
     }
 }
 

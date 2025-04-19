@@ -48,8 +48,8 @@ const PlayerStore = create<PlayerStore>((set, get) => ({
         const record: GameState = {
             ...GAME_INITIAL_STATE,
             players: players.map(p => ({
-                ...p,
-                CurrentRoundScore: 0, 
+                ID: p.ID,
+                CurrentRoundScore: undefined, 
                 TotalScore: 0, 
                 Scores: []
             }))

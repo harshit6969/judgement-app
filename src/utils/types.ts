@@ -2,12 +2,12 @@
 
 export type Player = {
   ID: number;
-  Name: string;
-  IsMF: boolean;
-  Profile: string;
-  ColorCode: string;
+  Name?: string;
+  IsMF?: boolean;
+  Profile?: string;
+  ColorCode?: string;
   CurrentRoundScore?: number | undefined;
-  TotalScore: number;
+  TotalScore?: number;
   Scores?: number[];
 };
 

@@ -44,7 +44,7 @@ const RoundStartDialog = () => {
                 {player.Name}
               </Typography>
               <Slider
-                value={player.CurrentRoundScore ?? 0}
+                value={player.CurrentRoundScore}
                 onChange={(_, value) => updateCurrentScore(index, value as number)}
                 min={0}
                 max={totalHands}

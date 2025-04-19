@@ -8,10 +8,7 @@ import {
 import useGameStore from "../../store/gameStore";
 import { useEffect, useState } from "react";
 import { Player } from "../../utils/types";
-
-const getSortedPlayers = (players: Player[]) => {
-  return players.sort((p1, p2) => p2.TotalScore - p1.TotalScore);
-};
+import { sortPlayersByScore } from "../../utils/helper";
 
 const Leaderboard = () => {
   const players = useGameStore.use.players();
@@ -20,8 +17,7 @@ const Leaderboard = () => {
   const [leaders, setLeaders] = useState<Player[]>([]);
 
   useEffect(() => {
-    console.log("Leaderboard players", players);
-    setLeaders(getSortedPlayers(players));
+    setLeaders(sortPlayersByScore(players));
   }, [currentRound]);
 
   return (

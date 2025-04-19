@@ -2,7 +2,7 @@
 import { create } from 'zustand';
 import { CheckboxOptions, GameStore } from '../utils/types';
 import { gameDB } from '../utils/db';
-import { createSelectors } from '../utils/helper';
+import { createSelectors, rotatePlayers } from '../utils/helper';
 import { GAME_INITIAL_STATE } from '../utils/constants';
 
 const useGameStore = create<GameStore>((set, get) => ({
@@ -79,7 +79,7 @@ const useGameStore = create<GameStore>((set, get) => ({
     const newState = {
       ...state,
       status: 0, // Return to idle state
-      players: updatedPlayers,
+      players: rotatePlayers(updatedPlayers),
       currentRound: state.currentRound + 1,
     };
     set(newState);

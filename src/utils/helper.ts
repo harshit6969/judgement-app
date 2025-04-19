@@ -1,4 +1,5 @@
 import { StoreApi, UseBoundStore } from 'zustand'
+import { Player } from '../utils/types';
 
 type WithSelectors<S> = S extends { getState: () => infer T }
     ? S & { use: { [K in keyof T]: () => T[K] } }
@@ -28,4 +29,13 @@ function getValue(key: string) {
 }
 
 
-export { setValue, getValue, createSelectors };
+const rotatePlayers = (players: Player[]) => {
+    const [firstPlayer, ...remainingPlayers] = players;
+    return [...remainingPlayers, firstPlayer];
+};
+
+const sortPlayersByScore = (players: Player[]) => {
+    return [...players].sort((p1, p2) => p2.TotalScore - p1.TotalScore);
+};
+
+export { setValue, getValue, createSelectors, rotatePlayers, sortPlayersByScore };

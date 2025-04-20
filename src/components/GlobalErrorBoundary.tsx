@@ -1,58 +1,29 @@
-// src/components/NotificationCenter.tsx
-import { useEffect } from 'react';
-import { Snackbar, Alert } from '@mui/material';
-import { useAppStore, useNotify } from '../store/appStore';
+import { useEffect } from "react";
+import { useNotify } from "../store/appStore";
+export const GlobalErrorBoundary = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const notify = useNotify();
 
-export const NotificationCenter = () => {
-  const { notifications, removeNotification } = useAppStore();
-  
-  const handleClose = (id: string) => () => {
-    removeNotification(id);
-  };
+  useEffect(() => {
+    const handleError = (event: ErrorEvent) => {
+      notify.error(event.error?.message || "An unexpected error occurred");
+    };
 
-  return (
-    <>
-      {notifications.map((notification) => (
-        <Snackbar
-          key={notification.id}
-          open={true}
-          autoHideDuration={notification.duration}
-          onClose={handleClose(notification.id)}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        >
-          <Alert
-            onClose={handleClose(notification.id)}
-            severity={notification.type}
-            variant="filled"
-          >
-            {notification.message}
-          </Alert>
-        </Snackbar>
-      ))}
-    </>
-  );
+    const handleRejection = (event: PromiseRejectionEvent) => {
+      notify.error(event.reason?.message || "An async error occurred");
+    };
+
+    window.addEventListener("error", handleError);
+    window.addEventListener("unhandledrejection", handleRejection);
+
+    return () => {
+      window.removeEventListener("error", handleError);
+      window.removeEventListener("unhandledrejection", handleRejection);
+    };
+  }, [notify]);
+
+  return <>{children}</>;
 };
-
-export const GlobalErrorBoundary = ({ children }: { children: React.ReactNode }) => {
-    const notify = useNotify();
-  
-    useEffect(() => {
-      const handleError = (event: ErrorEvent) => {
-        notify.error(event.error?.message || 'An unexpected error occurred');
-      };
-  
-      const handleRejection = (event: PromiseRejectionEvent) => {
-        notify.error(event.reason?.message || 'An async error occurred');
-      };
-  
-      window.addEventListener('error', handleError);
-      window.addEventListener('unhandledrejection', handleRejection);
-  
-      return () => {
-        window.removeEventListener('error', handleError);
-        window.removeEventListener('unhandledrejection', handleRejection);
-      };
-    }, [notify]);
-  
-    return <>{children}</>;
-  };

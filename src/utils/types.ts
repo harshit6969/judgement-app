@@ -57,9 +57,6 @@ export type GameStore = GameState & {
 
 export type CheckboxOptions = Map<number, boolean>;
 
-
-export type ThemeMode = 'light' | 'dark' | 'system';
-
 export type Notification = {
   id: string;
   message: string;
@@ -68,13 +65,10 @@ export type Notification = {
 };
 export interface AppStore {
   // Theme management
-  theme: ThemeMode;
-  setTheme: (theme: ThemeMode) => void;
 
   notifications: Notification[];
   addNotification: (notification: Omit<Notification, 'id'>) => void;
   removeNotification: (id: string) => void;
-
   // Loading states
   isLoading: boolean;
   setLoading: (loading: boolean) => void;

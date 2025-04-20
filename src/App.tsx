@@ -3,7 +3,14 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import SelectPlayers from "./pages/SelectPlayers";
 import Judgement from "./pages/Judgement";
-import { ThemeProviderWrapper } from "./components/ThemeProvider";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
+
+const theme = createTheme({
+  colorSchemes: {
+    dark: true,
+  },
+});
 
 const router = createHashRouter([
   {
@@ -25,9 +32,10 @@ const router = createHashRouter([
 
 function App() {
   return (
-    <ThemeProviderWrapper>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <RouterProvider router={router} />
-    </ThemeProviderWrapper>
+    </ThemeProvider>
   );
 }
 

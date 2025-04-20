@@ -5,8 +5,6 @@ import { AppStore } from '../utils/types';
 
 export const useAppStore = create<AppStore>((set) => ({
   notifications: [],
-  theme: 'light',
-  setTheme: (theme) => set({ theme }),
   isLoading: false,
   addNotification: (notification) =>
     set((state) => ({
@@ -25,11 +23,6 @@ export const useAppStore = create<AppStore>((set) => ({
     })),
   setLoading: (value) => set({ isLoading: value }),
 }));
-
-
-
-export const useTheme = () => useAppStore((state) => state.theme);
-export const useIsLoading = () => useAppStore((state) => state.isLoading);
 
 export const useNotify = () => {
   const { addNotification } = useAppStore();

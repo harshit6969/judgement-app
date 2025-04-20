@@ -122,7 +122,6 @@ const useGameStore = create<GameStore>((set, get) => ({
       currentRound: currentRound - 1,
       status: GameMode.UNDO
     };
-    await gameDB.saveGame(newState);
     set(newState);
   },
 }));

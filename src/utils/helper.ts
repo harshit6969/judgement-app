@@ -14,8 +14,7 @@ export const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ; (store.use as any)[k] = () => store((s) => s[k as keyof typeof s])
     }
-
-    return store
+    return store;
 }
 
 export const rotatePlayers = (players: Player[], direction: 1 | -1 = 1) => {

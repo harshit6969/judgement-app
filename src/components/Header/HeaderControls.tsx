@@ -1,7 +1,7 @@
-import { Box, Button, IconButton, Tooltip } from "@mui/material";
+import { Box, Button, IconButton, Tooltip, useColorScheme } from "@mui/material";
 import useGameStore from "../../store/gameStore";
 import { useParams } from "react-router-dom";
-import { useAppStore, useNotify } from "../../store/appStore";
+import { useNotify } from "../../store/appStore";
 import {
   DarkMode,
   LightMode,
@@ -13,11 +13,11 @@ import {
 import { GameMode } from "../../utils/types";
 
 const HeaderControls = () => {
+  const { mode, setMode } = useColorScheme();
   const { id } = useParams();
   const currentRound = useGameStore.use.currentRound();
   const status = useGameStore.use.status();
   const undoRound = useGameStore.use.undoRound();
-  const { theme, setTheme } = useAppStore();
   const notify = useNotify();
 
   const handleAddPlayer = () => {
@@ -28,15 +28,15 @@ const HeaderControls = () => {
     <Box sx={{ display: "flex", gap: 1 }}>
       <Tooltip
         title={
-          theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+          mode === "dark" ? "Switch to light mode" : "Switch to dark mode"
         }
       >
         <IconButton
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          onClick={() => setMode(mode === "dark" ? "light" : "dark")}
           color="inherit"
           sx={{ ml: 1 }}
         >
-          {theme === "light" ? <DarkMode /> : <LightMode />}
+          {mode === "light" ? <DarkMode /> : <LightMode />}
         </IconButton>
       </Tooltip>
       {currentRound > 1 &&

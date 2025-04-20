@@ -31,9 +31,11 @@ const PlayerStore = create<PlayerStore>((set, get) => ({
     transferPlayers: (direction) => {
         const { available, selected, checked } = get();
         const isRight = direction === 'right';
-        const playersToTransfer = isRight
-            ? available.filter(player => checked.includes(player))
-            : selected.filter(player => checked.includes(player));
+        const playersToTransfer = checked.filter(player =>
+            isRight
+                ? available.some(a => a.ID === player.ID)
+                : selected.some(s => s.ID === player.ID)
+        );
         set({
             available: isRight
                 ? available.filter(player => !checked.includes(player))

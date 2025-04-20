@@ -24,7 +24,7 @@ const HeaderInfo = () => {
     >
       <Chip
         label={label}
-        color="secondary"
+        color="warning"
         sx={{ fontWeight: "bold", fontSize: "1rem" }}
       />
     </Box>

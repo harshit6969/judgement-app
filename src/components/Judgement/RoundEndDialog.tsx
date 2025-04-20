@@ -71,13 +71,19 @@ const RoundEndDialog = () => {
         </FormControl>
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
+        <Button
+          size="large"
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+        >
           Submit
         </Button>
         {status !== GameMode.UNDO && (
           <Button
+            size="large"
             variant="contained"
-            color="warning"
+            color="error"
             onClick={() => updateStatus(GameMode.ROUND_EXECUTING)}
           >
             Back

@@ -10,8 +10,8 @@ export const TransferControls = () => {
   return (
     <div className="transfer-controls">
       <Button
-        variant="outlined"
-        size="small"
+        variant="contained"
+        size="large"
         onClick={() => transferPlayers("right")}
         disabled={available.filter((p) => checked.includes(p)).length === 0}
         aria-label="move selected right"
@@ -20,8 +20,8 @@ export const TransferControls = () => {
         &gt;
       </Button>
       <Button
-        variant="outlined"
-        size="small"
+        variant="contained"
+        size="large"
         onClick={() => transferPlayers("left")}
         disabled={selected.filter((p) => checked.includes(p)).length === 0}
         aria-label="move selected left"

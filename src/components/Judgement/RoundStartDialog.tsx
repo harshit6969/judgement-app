@@ -87,13 +87,19 @@ const RoundStartDialog = () => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
+        <Button
+          size="large"
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+        >
           Submit
         </Button>
         {!isEdit && (
           <Button
+            size="large"
             variant="contained"
-            color="warning"
+            color="error"
             onClick={() => updateStatus(GameMode.IDLE)}
           >
             Back

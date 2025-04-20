@@ -39,21 +39,24 @@ const HeaderControls = () => {
           {theme === "light" ? <DarkMode /> : <LightMode />}
         </IconButton>
       </Tooltip>
-      {currentRound > 1 && [GameMode.ROUND_EXECUTING, GameMode.IDLE].includes(status) && (
-        <Button
-          color="warning"
-          variant="contained"
-          onClick={() => undoRound()}
-          startIcon={<Undo />}
-        >
-          Undo
-        </Button>
-      )}
+      {currentRound > 1 &&
+        [GameMode.ROUND_EXECUTING, GameMode.IDLE].includes(status) && (
+          <Button
+            size="large"
+            color="warning"
+            variant="contained"
+            onClick={() => undoRound()}
+            startIcon={<Undo />}
+          >
+            Undo
+          </Button>
+        )}
       {id ? (
         <HeaderControlBtn />
       ) : (
         <Button
-          color="warning"
+          size="large"
+          color="success"
           variant="contained"
           onClick={handleAddPlayer}
           startIcon={<PersonAdd />}
@@ -74,6 +77,7 @@ const HeaderControlBtn = () => {
     case GameMode.IDLE:
       return (
         <Button
+          size="large"
           color="success"
           variant="contained"
           onClick={toggleRound}
@@ -85,6 +89,7 @@ const HeaderControlBtn = () => {
     case GameMode.ROUND_EXECUTING:
       return (
         <Button
+          size="large"
           color="error"
           variant="contained"
           onClick={toggleRound}

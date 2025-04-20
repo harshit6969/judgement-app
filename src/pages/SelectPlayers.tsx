@@ -45,8 +45,9 @@ export const SelectPlayers = () => {
         </Grid>
 
         <Button
+          size="large"
           variant="contained"
-          color="primary"
+          color="success"
           onClick={handleStartGame}
           disabled={selected.length < 4 || selected.length > 10}
           sx={{ mt: 2, alignSelf: "center", width: "50%" }}

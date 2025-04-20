@@ -47,7 +47,7 @@ export const SelectPlayers = () => {
         <Button
           size="large"
           variant="contained"
-          color="success"
+          color="primary"
           onClick={handleStartGame}
           disabled={selected.length < 4 || selected.length > 10}
           sx={{ mt: 2, alignSelf: "center", width: "50%" }}

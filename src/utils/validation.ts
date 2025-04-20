@@ -14,8 +14,3 @@ export const isStartValid = (players: Player[]): boolean => {
 export const isEndValid = (options: CheckboxOptions): boolean => {
     return Array.from(options.values()).some(isChecked => !isChecked);
 };
-
-
-export const canUndo = (players: Player[]): boolean => {
-    return players.every(p => p.PrevRoundScore !== undefined);
-};

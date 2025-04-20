@@ -4,7 +4,6 @@ import { CheckboxOptions, GameMode, GameStore } from '../utils/types';
 import { gameDB } from '../utils/db';
 import { createSelectors, rotatePlayers } from '../utils/helper';
 import { GAME_INITIAL_STATE } from '../utils/constants';
-import { canUndo } from '../utils/validation';
 
 const useGameStore = create<GameStore>((set, get) => ({
   ...GAME_INITIAL_STATE,
@@ -93,9 +92,6 @@ const useGameStore = create<GameStore>((set, get) => ({
     const { status, players, currentRound } = state;
     if (status === GameMode.ROUND_EXECUTING) {
       set({ status: GameMode.ROUND_START });
-      return;
-    }
-    if (!canUndo(players)) {
       return;
     }
     const updatedPlayers = players.map(player => {

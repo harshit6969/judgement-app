@@ -12,6 +12,7 @@ export class GameDB {
             players: gameData.players.map(p => ({
                 ID: p.ID,
                 CurrentRoundScore: p.CurrentRoundScore,
+                PrevRoundScore: p.PrevRoundScore,
                 TotalScore: p.TotalScore,
                 Scores: p.Scores
             })),
@@ -40,6 +41,7 @@ export class GameDB {
             return {
                 ...player,
                 CurrentRoundScore: gamePlayer.CurrentRoundScore,
+                PrevRoundScore: gamePlayer.PrevRoundScore,
                 TotalScore: gamePlayer.TotalScore,
                 Scores: gamePlayer.Scores
             };

@@ -2,6 +2,7 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { getTheme } from '../utils/theme';
 import { useTheme } from '../store/appStore';
+import { CssBaseline } from '@mui/material';
 
 export const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const themeMode = useTheme(); // 'light' | 'dark' | 'system'
@@ -9,6 +10,7 @@ export const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       {children}
     </ThemeProvider>
   );

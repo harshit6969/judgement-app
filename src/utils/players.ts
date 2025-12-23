@@ -64,6 +64,13 @@ const players = [
     Profile: Himanshu,
     ColorCode: "#a93226",
   },
+    {
+    ID: 14,
+    Name: "Prateek",
+    IsMF: false,
+    Profile: Maadi,
+    ColorCode: "#a93226",
+  },
 ];
 
 export default players;
